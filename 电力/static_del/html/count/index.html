@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>美发店后台管理系统</title>
+<meta name="keywords" content="美发店后台管理系统">
+<meta name="description" content="美发店后台管理系统">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+</head>
+<body>
+	<form class="layui-form">
+		<div id="main" style="width: 100%; height: 400px;"></div>
+	</form>
+</body>
+
+<script type="text/html" id="barEdit">
+	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="switchShow">
+  <input type="checkbox" name="show" value="{{d.carouselShow}}" lay-skin="switch" lay-text="展示|隐藏" lay-filter="show" {{ d.carouselShow == 1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="switchPicture">
+	<img class="picture" lay-event="picture" src="{{d.carouselPicture}}" style="height:30px" />
+</script>
+
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../../js/public.js" charset="utf-8"></script>
+<script src="../../dist/echarts.min.js"></script>
+<script>
+	layui.use([ 'form', 'table', 'upload' ], function() {
+		var form = layui.form;
+		var $ = layui.jquery;
+		var table = layui.table;
+		var upload = layui.upload;
+		// 基于准备好的dom，初始化echarts实例
+		var myChart = echarts.init(document.getElementById('main'));
+
+		$.ajax({
+			url:'/admin/user/queryday',
+			type:'get',
+			data:{},
+			dataType:"json",//数据类型
+			beforeSend:function(){
+				//do something
+			},
+			success:function(data){
+				//do something
+				if(data.code==0){
+					 var datanum=[];
+					 var obj;
+					 
+					 var d = data.data;
+					 for(var i=0;i<d.length;i++){
+						 obj=new Object();
+						 obj.value=d[i].value;
+						 obj.name=d[i].name;
+						 datanum.push(obj);
+					 }
+					 console.log(datanum);
+					// 指定图表的配置项和数据
+						var option = {
+								tooltip: {
+							        trigger: 'item',
+							        formatter: '{a} <br/>{b}: {c} ({d}%)'
+							    },
+							    legend: {
+							        orient: 'vertical',
+							        left: 10,
+							        data: ['新增会员', '会员消费']
+							    },
+							    series: [
+							        {
+							            name: '访问来源',
+							            type: 'pie',
+							            radius: ['50%', '70%'],
+							            avoidLabelOverlap: false,
+							            label: {
+							                show: false,
+							                position: 'center'
+							            },
+							            emphasis: {
+							                label: {
+							                    show: true,
+							                    fontSize: '30',
+							                    fontWeight: 'bold'
+							                }
+							            },
+							            labelLine: {
+							                show: false
+							            },
+							            data: datanum
+							        }
+							    ]
+						};
+
+						// 使用刚指定的配置项和数据显示图表。
+						myChart.setOption(option);
+					 
+				} else {
+					$('.tips').text('* 账号与密码不匹配，请重新输入');
+				}
+			},
+			error:function(data){
+				//do something
+				layer.msg('与服务器连接失败,请稍后登录',{icon: 2});
+			}
+		});
+		 
+	});
+</script>
+</html>

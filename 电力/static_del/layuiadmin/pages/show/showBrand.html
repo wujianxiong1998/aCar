@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta name="keywords" content="后台管理系统">
+    <meta name="description" content="后台管理系统">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/main.css" media="all">
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=IfERrnR55USDhRr1pGbN0aFp3XsNBkHd"></script>
+    <style>
+        .layui-row {
+            padding: 10px 0px 10px 0px;
+        }
+
+        .archives,
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .btnSearch {
+            background: #0e799c;
+            padding: 0px 24px;
+        }
+
+        .layui-form-item .layui-inline {
+            margin-bottom: 10px;
+        }
+
+        .layui-laypage a,
+        .layui-laypage span {
+            background-color: transparent;
+            border: none
+        }
+
+        .layui-laypage .layui-laypage-curr .layui-laypage-em {
+            background-color: #0e799c
+        }
+
+        .btnAdd {
+            background-color: #ff8e2f
+        }
+
+        .edit {
+            background-color: #1bb2e4;
+            color: #fff;
+            padding: 0px 12px;
+            border-radius: 0px
+        }
+
+        .del {
+            background-color: #ff4545;
+            color: #fff;
+            padding: 0px 12px;
+            border-radius: 0px
+        }
+
+        .layer-class .layui-layer-ico {
+            background: url(../../images/icon.png) no-repeat !important;
+            background-size: 100% 100% !important;
+        }
+
+        .layer-class .layui-layer-title {
+            padding: 0px 50px !important;
+            font-size: 14px;
+            text-align: left;
+            color: #fff;
+            background: #0c4152
+        }
+
+        .layer-class .layui-layer-btn {
+            text-align: center
+        }
+
+        .map-header {
+            background: #26323e;
+        }
+
+        .layui-col-xs3 {
+            text-align: center;
+            color: #9199a1;
+        }
+
+        #container {
+            height: 700px;
+        }
+
+        .map-right {
+            background: #323c45;
+            height: 700px;
+        }
+
+        .map-right .title {
+            padding: 10px 0px 10px 30px;
+            color: #489c8c;
+            font-size: 24px;
+        }
+
+        .staste {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            background: #465059;
+            color: #c1cad1;
+        }
+
+        .layui-card,
+        .layui-card-header {
+            font-size: 16px;
+            background: transparent;
+            color: #c1cad1;
+        }
+
+        .layui-card-header span {
+            font-size: 12px;
+        }
+
+        .layui-card-body {
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="archives">
+        <div class="map-header layui-row ">
+            <div class="layui-col-xs3" style="text-align: center;margin-top: 10px;">
+                进入集控集团
+                <i class=" layui-icon layui-icon-right" style="font-size: 18px;"></i>
+            </div>
+            <div class="layui-col-xs3">
+                电站总数:
+                <span style="color:#55a5bc;font-size: 28px;">2</span>
+            </div>
+            <div class="layui-col-xs3">
+                电站总容量:
+                <span style="color:#55a5bc;font-size: 28px;">28.01</span>
+                MWp
+            </div>
+            <div class="layui-col-xs3">h
+                累计发电量:
+                <span style="color:#55a5bc;font-size: 28px;">118.12</span>
+                GWh
+            </div>
+        </div>
+        <div class="layui-row" style="padding:0px;">
+            <div class="map layui-col-xs6">
+                <div id="container"></div>
+            </div>
+            <div class="layui-col-xs6 layui-bg-black map-right">
+                <p class="title">APOLLO(6.1MW)</p>
+                <p id="" style="color: #6d757b; font-size: 18px;">
+                    <span id="lng">东经:</span>
+                    <span id="lat">北纬:</span>
+                </p>
+                <div class="staste">
+                    正常
+                </div>
+                <div style="margin:10px;">
+                    <img src="../../images/login/login.png" height="300px" width="100%" alt="">
+                </div>
+                <div class="layui-row layui-col-space10" style="padding: 10px;">
+                    <div class="layui-col-xs5">
+                        <div class="layui-card">
+                            <div class="layui-card-header">实时功率 <span>2020-12-12</span></div>
+                            <div class="layui-card-body">
+                                <div id="main" style="width:100%;margin-top: -20px; height:250px"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="layui-col-xs5">
+                        <div class="layui-card">
+                            <div class="layui-card-header">当日概况</div>
+                            <div class="layui-card-body layui-row" style="padding: 10px;">
+                                <div class="layui-col-xs6 " style="border-right: 1px solid #fff; padding-right: 10px;">
+                                    <p style="color: #a6b0ba;">累计辐射</p>
+                                    <p style="color: #fff; text-align: right;">4691Wh</p>
+                                    <p style="color: #a6b0ba;">端发小时</p>
+                                    <p style="color: #fff; text-align: right;">3.7h</p>
+                                </div>
+                                <div class="layui-col-xs6" style="padding-left: 10px;">
+                                    <p style="color: #a6b0ba;">每瓦出力</p>
+                                    <p style="color: #fff; text-align: right;">80.02%</p>
+                                    <p style="color: #a6b0ba;">发电量</p>
+                                    <p style="color: #fff; text-align: right;">22MWh</p>
+                                </div>
+                            </div>
+                            <div class="layui-card-footer">
+                                <div>
+                                    快捷入口
+                                </div>
+                                <div class="layui-row">
+                                    <div class="layui-col-xs6">
+                                        <button class="layui-btn layui-btn-normal" style="border-radius: 4px;">电站监控
+                                            <i class="layui-icon layui-icon-right"></i>
+                                        </button>
+                                    </div>
+                                    <div class="layui-col-xs6">
+                                        <button class="layui-btn layui-btn-normal" style="border-radius: 4px;">快捷入口
+                                            <i class="layui-icon layui-icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../js/jquery.min.js"></script>
+
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<!-- LavM7Uv77DPhpmGXudGsFpfVDR8p4khI -->
+<script type="text/javascript">
+    var map = new BMapGL.Map('container'); // 创建Map实例
+    map.setMapType(BMAP_EARTH_MAP);
+    map.centerAndZoom(new BMapGL.Point(116.404, 39.915), 8); // 初始化地图,设置中心点坐标和地图级别
+    var point = new BMapGL.Point(116.404, 39.915);
+    var marker = new BMapGL.Marker(point)        // 创建标注   
+    map.addOverlay(marker);
+
+    var pointt = new BMapGL.Point(115.6, 37.85);
+    var markert = new BMapGL.Marker(pointt)        // 创建标注   
+    map.addOverlay(markert);
+
+    markert.addEventListener("click", function (e)
+    {
+        console.log(e);
+        $('#lng').html('东经:' + e.latLng.lng)
+        $('#lat').html('北纬:' + e.latLng.lat)
+    });
+    marker.addEventListener("click", function (e)
+    {
+        console.log(e);
+        $('#lng').html('东经:' + e.latLng.lng)
+        $('#lat').html('北纬:' + e.latLng.lat)
+    });
+</script>
+
+<script src="../../js/echarts.min.js"></script>
+<SCript type="text/javascript">
+    var myChart = echarts.init(document.getElementById('main'));
+    var option = {
+        xAxis: {
+            type: 'category',
+        },
+        yAxis: {
+            type: 'value'
+        },
+        axisLine: {       //y轴不显示
+            "show": false
+        },
+        axisTick: {       //y轴刻度线不显示
+            "show": false
+        },
+        axisLabel: {
+            color: "#BACCF4"  //坐标轴的文本颜色
+        },
+        grid: {
+            x: 50,
+            y: 50,
+            x2: 10,
+            y2: 60,
+            borderWidth: 10
+        },
+        series: [
+            {
+                name: '邮件营销',
+                type: 'line',
+                stack: '总量',
+                data: [0, 0, 0, 0, 103, 145, 145, 123, 145, 123, 123.314, 242, 345, 234, 234, 242, 342, 234.232]
+            },
+            {
+                name: '联盟广告',
+                type: 'line',
+                stack: '总量',
+                itemStyle: {
+                    normal: {
+                        color: '#8cd5c2', //改变折线点的颜色
+                        lineStyle: {
+                            color: '#8cd5c2' //改变折线颜色
+                        }
+                    }
+                },
+                data: [0, 0, 0, 0, 104, 144, 185, 163, 185, 193, 193.344, 442, 365, 236, 265, 242, 342, 226.221]
+            },
+
+        ]
+    };
+    myChart.setOption(option);
+</SCript>
+
+</html>

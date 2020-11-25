@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta name="keywords" content="后台管理系统">
+    <meta name="description" content="后台管理系统   ">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+    <!-- <link rel="stylesheet" href="../../layui/step-lay/step.css" media="all"> -->
+    <style>
+        .frameContent {
+            padding: 30px 0px 0px 0px
+        }
+
+        .frameBtn {
+            text-align: center;
+            margin: 20px 0px;
+            padding-top: 20px;
+        }
+
+        .frameBtn .layui-btn {
+            width: 20%
+        }
+
+        .frameBtn .sub {
+            background-color: #ff312c
+        }
+
+        .edit {
+            background-color: #1bb2e4;
+            color: #fff;
+            padding: 0px 12px;
+            border-radius: 0px
+        }
+
+        .del {
+            background-color: #ff4545;
+            color: #fff;
+            padding: 0px 12px;
+            border-radius: 0px
+        }
+
+        .upload {
+            background-color: #009688;
+            color: #fff;
+            padding: 0px 12px;
+            border-radius: 0px
+        }
+
+        .frameBtn .cancel {
+            background-color: #ebebeb;
+            border: 1px #cecece solid;
+            color: #666;
+        }
+
+        .layer-class .layui-layer-ico {
+            background: url(../../images/icon.png) no-repeat !important;
+            background-size: 100% 100% !important;
+        }
+
+        .layer-class .layui-layer-title {
+            padding: 0px 50px !important;
+            font-size: 14px;
+            text-align: left;
+            color: #fff;
+            background: #0c4152
+        }
+
+        .layer-class .layui-layer-btn {
+            text-align: center
+        }
+
+        .frameContent .layui-form-label {
+            width: 100px
+        }
+
+        .frameContent .layui-input-block {
+            margin-left: 130px
+        }
+
+        .frameContent .img {
+            border: 1px #e0e0e0 solid;
+            width: 180px;
+            height: 100px;
+            padding: 20px;
+        }
+
+        .frameContent .img img {
+            width: 100%;
+            height: 100%
+        }
+
+        .layui-card,
+        .layui-upper {
+            background: -webkit-linear-gradient(#027a8d, #054077, #015561);
+        }
+
+        .layui-table-view {
+            border-color: #0764646b;
+        }
+
+        .layui-table-header {
+            border-color: #0764646b;
+        }
+
+        th {
+            border-color: #0764646b;
+        }
+
+        .layui-table {
+            background: linear-gradient(to right, #104953, #2bafc2, #025c6848);
+        }
+
+        .layui-table tbody tr {
+            color: #87b4c7;
+            border-color: none;
+        }
+
+        .layui-table th,
+        .layui-table td {
+            border-color: #0764643f;
+            color: rgb(211, 212, 212);
+        }
+
+        .layui-table tbody tr:hover {
+            background-color: #0095c0;
+            color: #fff;
+        }
+
+        .layui-table thead tr {
+            background: linear-gradient(to right, #04404b, #007585fa);
+            color: #fff;
+        }
+
+        .layui-color {
+            color: #cecece;
+        }
+
+        .layui-detail-color {
+            color: #24D6E0
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-body" style="padding-top: 40px;">
+                <div id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
+                    <div style="overflow:initial;">
+                        <div class="layui-upper">
+                            <form class="layui-form">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label layui-color">筛选:</label>
+                                    <label class="layui-form-label layui-detail-color"
+                                        style="margin-left: 10px;">恢复默认:</label>
+                                    <label class="layui-form-label layui-detail-color"
+                                        style="float: right;">收起全部:</label>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label layui-color">时间</label>
+                                    <label class="layui-form-label layui-detail-color">当天</label>
+                                    <label class="layui-form-label layui-detail-color">最近三天</label>
+                                    <label class="layui-form-label layui-detail-color">当月</label>
+                                    <label class="layui-form-label layui-detail-color">最近三月</label>
+                                    <div class="layui-form-date" style="margin-left: 10px; ">
+                                        <input type="text" style="width: 280px; height: 30px;" placeholder="请选择日期"
+                                            value="" class="layui-laydate" id="chooseDate" lay-verify="required"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-color" style="padding-left: 67px;">等级</label>
+                                    <label class="layui-detail-color"
+                                        style="margin-right: 17px; margin-left: 57px ;">提示</label>
+                                    <label class="layui-detail-color" style="margin-right: 17px;">警告</label>
+                                    <label class="layui-detail-color" style="margin-right: 279px;">故障</label>
+                                    <label class="layui-color" style="margin-right: 17px;">操作</label>
+                                    <label class="layui-detail-color" style="margin-right: 10px;">已操作</label>
+                                    <label class="layui-detail-color">未操作</label>
+                                </div>
+
+                                <div class="layui-form-item" style="width: 500px;">
+                                    <div class="layui-inline ">
+                                        <label class="layui-form-label layui-color">类型:</label>
+                                        <div class="layui-input-inline" style="width: 200px; margin-left: 47px;">
+                                            <select name="name" lay-filter="aihao">
+                                                <option value="1">全部告管类型</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline ">
+                                        <label class="layui-form-label layui-color"
+                                            style="margin-right: 47px;">设备:</label>
+                                        <div class="layui-input-inline">
+                                            <select name="name" lay-filter="aihao">
+                                                <option value="">请选择设备类型</option>
+                                                <option value="1">全部告管类型</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline ">
+                                        <div class="layui-input-inline">
+                                            <select lay-verify="required">
+                                                <option value="">请选择设备类型</option>
+                                                <option value="1">全部告管类型</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <button type="button" class="layui-btn layui-detail-color">查询</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="layui-form-item layui-upper">
+                            <table id="devTableList" lay-filter="test"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../../layui/step-lay/step.js" charset="utf-8"></script>
+<script>
+    function dele(s)
+    {
+        var par = s.parentNode;
+        par.remove();
+    }
+    layui.config({
+        base: '../../layui/'
+    }).extend({
+        step: 'step-lay/step',
+        selectN: 'layui_extends/selectN',
+        selectM: 'layui_extends/selectM',
+        treeTable: 'layui_extends/treeTable'
+    }).use(['laydate', 'table', 'form', 'layedit', 'upload', 'treeTable', 'selectM', 'selectN', 'step', 'element'], function ()
+    {
+        var table = layui.table;
+        var $ = layui.jquery;
+        var form = layui.form;
+        var layedit = layui.layedit;
+        var upload = layui.upload;
+        var treeTable = layui.treeTable;
+        var selectN = layui.selectN;
+        var selectM = layui.selectM;
+        var step = layui.step;
+        var element = layui.element;
+        var laydate = layui.laydate;
+        var values = 1;
+
+
+        layedit.build('demoedit1'); //建立编辑器
+        layedit.build('demoedit2'); //建立编辑器
+
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#devTableList'
+            , height: 312
+            , url: 'json/device.json'
+            , page: true //开启分页
+            , cols: [[ //表头
+                { field: 'terminal', title: '场站', sort: true, fixed: 'left' }
+                , { field: 'device', title: '设备', sort: true }
+                , { field: 'level', title: '等级', sort: true }
+                , { field: 'type', title: '类型', sort: true, }
+                , { field: 'remark', title: '评论', sort: true }
+                , { field: 'warningContent', title: '告警内容', sort: true }
+                , { field: 'startTime', title: '开始时间', sort: true }
+            ]]
+        });
+
+
+        laydate.render({
+            elem: '#chooseDate'
+            , type: 'datetime'
+            , trigger: 'click'//呼出事件改成click
+            //,format: 'yyyy-MM-dd HH:mm:ss' //可任意组合
+        });
+
+
+        laydate.render({
+            elem: '#stepForm',
+            filter: 'stepForm',
+            width: '100%', //设置容器宽度
+            stepWidth: '750px',
+            height: '1600px',
+            // stepItems: [{
+            //     title: '填写商品信息'
+            // }, {
+            //     title: '填写商品促销'
+            // }, {
+            //     title: '填写商品属性'
+            // }]
+        });
+    });
+</script>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>美发店管理系统</title>
+	<meta name="keywords" content="美发店管理系统">
+	<meta name="description" content="美发店管理系统">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+</head>
+<body>
+<form class="layui-form">
+	<div class="layui-form-item layui-elem-quote">
+		
+		<label class="layui-form-label" style="width:auto">产品名称</label>
+		<div class="layui-input-inline">
+			 <input type="text" id="pro_name" name="pro_name" placeholder="请输入产品名称" autocomplete="off" class="layui-input">
+		</div>
+	
+		<label class="layui-form-label" style="width:auto"></label>
+		<button type="button" class="layui-btn layui-btn-primary btnSearch" lay-filter="search" lay-submit>查询</button>
+		<button type="button" class="layui-btn layui-btn-primary btnAdd" lay-submit>新增</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+<table id="tableList" class="layui-hide" lay-filter="tableList"></table>
+</body>
+
+<script type="text/html" id="barEdit">
+	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="switchShow">
+  <input type="checkbox" name="show" value="{{d.carouselShow}}" lay-skin="switch" lay-text="展示|隐藏" lay-filter="show" {{ d.carouselShow == 1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="switchPicture">
+	<img class="picture" lay-event="picture" src="{{d.carouselPicture}}" style="height:30px" />
+</script>
+
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../../js/public.js" charset="utf-8"></script>
+
+<script>
+layui.use(['form','table'], function(){
+	var form = layui.form;
+	var $ = layui.jquery;
+	var table = layui.table;
+	//新增文章
+	$('.btnAdd').on('click',function(){
+		OpenHtml('新增',['100%','100%'],'add.html');
+	});
+	
+	//加载表格
+	table.render({
+		elem: '#tableList'
+		,url:'/admin/pro/queryList'
+		,method:'post'
+		,contentType: 'application/json'
+		,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+		,cols: [[
+			 {field:'code', align:'center', title: '编号'}
+			,{field:'pro_name',align:'center', title: '产品名称'}
+			,{field:'num', align:'center', title: '库存数量'}
+			,{field:'supplier', align:'center', title: '供货商'}
+			,{field:'purchase_price', align:'center', title: '进价'}
+			,{field:'price', align:'center', title: '售价'}
+			,{fixed:'right', align:'center',width:150,title:'操作', toolbar: '#barEdit'}
+		]],
+		page: true
+	});
+	
+	//重载表格
+	$('.btnSearch').on('click',function(){
+		table.reload('tableList',{
+			page: {
+				curr: 1 //重新从第 1 页开始
+			},
+			where: {
+				pro_name: $('#pro_name').val()
+			}
+		});
+	});
+	
+	table.on('tool', function(obj){
+		var data = obj.data;
+		if(obj.event === 'detail'){//查看
+			
+		} else if(obj.event === 'edit'){//编辑
+			OpenHtml('编辑',['100%','100%'],'edit.html?id='+data.id);
+		} else if(obj.event === 'do1'){
+			UpdateTable('/admin/pro/update','post',{"id":data.id,"status":"2"},'确定冻结?','tableList');
+		}else if(obj.event === 'do2'){
+			UpdateTable('/admin/pro/update','post',{"id":data.id,"status":"1"},'确定启用?','tableList');
+		}else if(obj.event === 'del'){
+			DeleteTable('/admin/pro/delete','get',{"id":data.id},'tableList');
+		}
+	});
+	
+	//监听状态
+	form.on('switch(show)', function(obj){
+		//layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+		var data = {
+			"type":$(this).val(),
+			"content":obj.othis[0].innerText
+		};
+		SubmitSwitch('../../json/carousel.json',data,'get','tableList');
+	});
+});
+</script>
+</html>

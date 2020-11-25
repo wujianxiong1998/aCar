@@ -1,0 +1,14 @@
+{
+	"code":0,
+	"msg":"",
+	"count":1,
+	"data":[{
+		"categoryId":"1",
+		"categoryName":"行业新闻",
+		"categoryUrl":"news1.html"
+	},{
+		"categoryId":"2",
+		"categoryName":"公司新闻",
+		"categoryUrl":"news2.html"
+	}]
+}

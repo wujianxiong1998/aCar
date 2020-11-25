@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" href="//g.alicdn.com/de/prismplayer/2.6.0/skins/default/aliplayer-min.css" />
+  <script type="text/javascript" src="//g.alicdn.com/de/prismplayer/2.6.0/aliplayer-min.js"></script>
+  <style>
+    body {
+      background: rgb(9, 44, 136);
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .box {
+      width: 48%;
+      margin: 1%;
+      box-sizing: border-box;
+      border: 1px solid lightblue;
+    }
+
+    .box ul {
+      display: flex;
+      padding: 10px 20px;
+      margin: 0;
+      box-sizing: border-box;
+      list-style: none;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .box ul:nth-child(1) {
+      background: rgb(66, 94, 159);
+    }
+
+    ul>li {
+      flex: 1;
+      padding-top: 5px;
+      flex-wrap: nowrap;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .stop {
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      background: lightcoral;
+    }
+
+    .begin {
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      background: lightgreen;
+    }
+
+    ul span {
+      display: block;
+    }
+
+    .alignLeft li {
+      justify-content: flex-start !important;
+    }
+
+    .pad li {
+      padding: 20px 0;
+    }
+
+    .progress {
+      width: 80%;
+      height: 8px;
+      display: block;
+      background: rgb(140, 202, 243);
+    }
+    .progress_len {
+      width: 10%;
+      height: 100%;
+      background:lightgreen;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="container">
+      <!-- 视频 -->
+      <div class="box">
+        <!-- 表头 -->
+        <ul class="alignLeft">
+          <li>视频</li>
+        </ul>
+        <div class="prism-player" id="J_prismPlayer"></div>
+      </div>
+
+      <div class="box">
+        <!-- 表头 -->
+        <ul>
+          <li>数值</li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        <!-- 数据 -->
+        <ul v-for="item of dataSourceTwo" :key="item.id">
+          <li>{{item.num}}</li>
+          <li>{{item.setting}}</li>
+          <li>{{item.actual}}</li>
+          <li>{{item.unit}}</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <!-- 表头 -->
+        <ul>
+          <li>轴名称</li>
+          <li>工件坐标</li>
+          <li>机械坐标</li>
+          <li>跟随误差</li>
+          <li>剩余行程</li>
+          <li>状态</li>
+        </ul>
+        <!-- 数据 -->
+        <ul v-for="item of dataSource" :key="item.id">
+          <li>{{item.name}} mm</li>
+          <li>{{item.gjPos}}</li>
+          <li>{{item.jxPos}}</li>
+          <li>{{item.error}}</li>
+          <li>{{item.remain}}</li>
+          <li><span :class="item.remain===0?'stop':'begin'"></span></li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <!-- 表头 -->
+        <ul class="alignLeft">
+          <li>信息</li>
+          <li></li>
+          <li></li>
+        </ul>
+        <!-- 数据 -->
+        <ul class="pad alignLeft" v-for="item of dataSourceThree" :key="item.id">
+          <li>{{item.num}}</li>
+          <li>
+            <span class="progress" v-if="item.id===2">
+              <span class="progress_len"></span>
+            </span>
+            <span v-if="item.id!==2">{{item.setting}}</span>
+          </li>
+          <li>{{item.actual}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+   <!-- 视频 -->
+   <script>
+    // player.play()
+  </script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          message: 'Hello Vue!',
+          timer: null,
+          timer2: null,
+          dataSource: [{
+              id: 0,
+              name: 'X1',
+              gjPos: 600.23,
+              jxPos: 362.207,
+              error: '0.000',
+              remain: 360.012,
+              status: 'stop'
+            },
+            {
+              id: 1,
+              name: 'Y',
+              gjPos: 592.23,
+              jxPos: 552.026,
+              error: '0.000',
+              remain: 0.000,
+              status: 'begin'
+            },
+            {
+              id: 2,
+              name: 'Z',
+              gjPos: 15.234,
+              jxPos: 14.340,
+              error: '0.000',
+              remain: 0.000,
+              status: 'stop'
+            },
+            {
+              id: 3,
+              name: 'X2',
+              gjPos: 576.042,
+              jxPos: 362.780,
+              error: '0.000',
+              remain: 0.000,
+              status: 'stop'
+            },
+          ],
+          dataSourceOne: [{
+              id: 0,
+              name: 'X1',
+              gjPos: 600.23,
+              jxPos: 362.207,
+              error: '0.000',
+              remain: 360.000,
+              status: 'stop'
+            },
+            {
+              id: 1,
+              name: 'Y',
+              gjPos: 592.23,
+              jxPos: 552.026,
+              error: '0.000',
+              remain: 0.000,
+              status: 'begin'
+            },
+            {
+              id: 2,
+              name: 'Z',
+              gjPos: 15.234,
+              jxPos: 14.340,
+              error: '0.000',
+              remain: 0.000,
+              status: 'stop'
+            },
+            {
+              id: 3,
+              name: 'X2',
+              gjPos: 576.042,
+              jxPos: 362.780,
+              error: '0.000',
+              remain: 0.000,
+              status: 'stop'
+            },
+          ],
+          dataSourceTwo: [{
+              id: 0,
+              num: '',
+              setting: '设定值',
+              actual: '实际值',
+              unit: ''
+            },
+            {
+              id: 1,
+              num: '割嘴间隙',
+              setting: '1',
+              actual: '1',
+              unit: 'mm'
+            },
+            {
+              id: 2,
+              num: '焦点位置',
+              setting: '3.5',
+              actual: '3.5',
+              unit: 'mm'
+            },
+            {
+              id: 3,
+              num: '辅助压力',
+              setting: '2',
+              actual: '-0.05',
+              unit: 'bar'
+            },
+            {
+              id: 4,
+              num: '激光功率',
+              setting: '18000',
+              actual: '18000',
+              unit: 'W'
+            },
+            {
+              id: 5,
+              num: '激光频率',
+              setting: '2000',
+              actual: '2000',
+              unit: 'HZ'
+            },
+            {
+              id: 6,
+              num: '占空比',
+              setting: '100',
+              actual: '100',
+              unit: '%'
+            }
+          ],
+          dataSourceThree: [{
+              id: 0,
+              num: '加工时间',
+              setting: '00: 03: 47',
+              actual: '',
+              unit: ''
+            },
+            {
+              id: 1,
+              num: '出光时间',
+              setting: '00: 02: 23',
+              actual: '',
+              unit: 'mm'
+            },
+            {
+              id: 2,
+              num: '加工进度',
+              setting: '0',
+              actual: '10.00 %',
+              unit: ''
+            },
+          ]
+        }
+      },
+      methods: {
+
+      },
+      created() {
+        let {
+          timer,
+          timer2,
+          dataSource,
+          dataSourceThree
+        } = this.$data
+        timer = setInterval(() => {
+          dataSource.forEach((item, index) => {
+            if (item.name === 'X1' || item.name === 'X2') {
+              if (item.gjPos > 0) {
+                if (item.gjPos < 33) {
+                  item.gjPos = 0
+                } else {
+                  item.gjPos = (item.gjPos - 33).toFixed(2)
+                }
+              } else {
+                dataSource[0].gjPos = 600.23
+                dataSource[3].gjPos = 576.042
+              }
+
+              if (item.remain > 0) {
+                if (item.remain < 33) {
+                  item.remain = 0
+                } else {
+                  item.remain = (item.remain - 33).toFixed(2)
+                }
+              } else {
+                dataSource[0].remain = 213.23
+                dataSource[3].remain = 362.78
+              }
+
+              if (item.jxPos > 0) {
+                if (item.jxPos < 22) {
+                  item.jxPos = 0
+                } else {
+                  item.jxPos = (item.jxPos - 22).toFixed(2)
+                }
+              } else {
+                dataSource[0].jxPos = 362.207
+                dataSource[3].jxPos = 362.78
+              }
+            }
+          })
+        }, 200)
+        timer2 = setInterval(() => {
+          dataSourceThree.forEach(item=>{
+            let arr = item.setting.split(': ')
+            let hh=0, mm=0, ss=0
+            if(arr[0]!=59) {
+              hh=Number(arr[0])
+            } else {
+              hh = 0
+            }
+            if(arr[1]!=59) {
+              mm=Number(arr[1])
+            } else {
+              hh=Number(arr[0])+1
+              mm = 0
+            }
+            if(arr[2]!=59) {
+              ss = Number(arr[2]) + 1
+            } else {
+              mm=Number(arr[1])+1
+              ss = 0
+            }
+
+            if(ss<10) {
+              ss = '0'+ss
+            }
+            if(mm<10) {
+              mm = '0'+mm
+            }
+            if(hh<10) {
+              hh = '0'+hh
+            }
+            item.setting = hh+": "+mm+": "+ss
+          })
+        }, 1000)
+      },
+      mounted() {
+        var player = new Aliplayer({
+        id: "J_prismPlayer",
+        autoplay: true,
+        width: "100%",
+        height: "350px",
+        vid: "bf9b7e4a36d84aea8cee769765fbc28b",
+        playauth: '',
+        cover: '',
+        rePlay: true,
+        autoPlayDelay: 0.5,
+        source: 'http://feibao.heibaokeji.com/fn/1606042599095123_1606047421019376.mp4'
+      });
+      document.querySelector('video').play()
+      },
+      destroyed() {
+        let {
+          timer,timer2
+        } = this.$data
+        clearInterval(timer)
+        clearInterval(timer2)
+      },
+    })
+  </script>
+</body>
+
+</html>

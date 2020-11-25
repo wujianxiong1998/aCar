@@ -1,0 +1,30 @@
+{
+	"code":0,
+	"msg":"",
+	"count":3,
+	"data":[{
+		"levelId":"1",
+		"levelName":"普通会员",
+		"levelContent":"普通会员就是普通"
+	},{
+		"levelId":"2",
+		"levelName":"青铜会员",
+		"levelContent":"青铜会员就是青铜"
+	},{
+		"levelId":"3",
+		"levelName":"白银会员",
+		"levelContent":"白银会员就是白银"
+	},{
+		"levelId":"4",
+		"levelName":"黄金会员",
+		"levelContent":"黄金会员就是黄金"
+	},{
+		"levelId":"5",
+		"levelName":"铂金会员",
+		"levelContent":"铂金会员就是铂金"
+	},{
+		"levelId":"6",
+		"levelName":"钻石会员",
+		"levelContent":"钻石会员就是钻石"
+	}]
+}

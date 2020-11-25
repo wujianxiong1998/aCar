@@ -1,0 +1,211 @@
+body {
+  font-size: 14px;
+  font-family: Helvetica, Microsoft YaHei, SimSun, Arial, Tahoma;
+}
+/*顶部样式*/
+.layui-header {
+  /* margin-left: 220px; */
+  background: url("../images/top-bg.png") center center no-repeat;
+  background-size: 100% 100%;
+}
+.layui-header .box {
+  height: 60px;
+}
+.layui-header .box .btnHeader {
+  display: inline-block;
+  height: 60px;
+  padding: 0px 25px;
+  line-height: 60px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  background: rgba(0, 0, 0, 0);
+  position: relative;
+}
+.layui-header .box .logout:before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  top: 22px;
+  left: 0px;
+}
+.layui-header .box .navHeader {
+  display: inline-block;
+  cursor: pointer;
+}
+.layui-header .box .navHeader .layui-nav-item {
+  vertical-align: inherit;
+}
+.layui-header .header-left {
+  text-align: center;
+  width: 60px;
+  font-size: 24px;
+  line-height: 60px;
+  float: left;
+}
+.layui-header .header-right .layui-icon {
+  padding-right: 30px;
+}
+.layui-header .header-left .layui-icon,
+.layui-header .header-right .layui-icon {
+  text-align: center;
+  width: 60px;
+  color: white;
+  font-size: 24px;
+  line-height: 60px;
+  font-size: 24px;
+  cursor: pointer;
+}
+.layui-header .header-left:hover,
+.layui-header .header-right:hover {
+  background: #027a8d;
+}
+.layui-header .header-right {
+  float: right;
+}
+/*导航样式*/
+.layui-side {
+  width: 220px;
+}
+.layui-side-scroll {
+  background: rgb(12, 65, 82);
+}
+.layui-side .layui-icon {
+  display: inline-block;
+  width: 40px;
+  font-size: 20px;
+}
+.layui-nav-tree {
+  width: 100%;
+}
+.layui-logo {
+  background: #0c4152;
+  text-align: left;
+  margin: 0 auto;
+}
+.layui-logo img {
+  margin: 11px;
+  width: 38px;
+  height: 38px;
+}
+.layui-logo span {
+  color: #fff;
+  font-size: 16px;
+}
+.layui-nav {
+  border-radius: 0px;
+  background-color: transparent;
+}
+/*主体样式*/
+.layui-bodier {
+  /* margin-left: 220px; */
+}
+.layui-bodier .firstTab i {
+  display: none;
+}
+.tabFrame {
+  width: 100%;
+}
+.layui-nav-tree .layui-nav-item {
+  line-height: 50px;
+}
+.layui-nav-tree .layui-nav-child dd.layui-this,
+.layui-nav-tree .layui-nav-child dd.layui-this a,
+.layui-nav-tree .layui-this,
+.layui-nav-tree .layui-this > a,
+.layui-nav-tree .layui-this > a:hover {
+  background-color: #0d7fa3;
+}
+.layui-nav-tree .layui-nav-child a {
+  border-bottom: 1px #104d61 solid;
+}
+.layui-nav-tree .layui-nav-item a:hover {
+  background-color: #0d7fa3;
+}
+.layui-nav-tree .layui-nav-bar {
+  display: none;
+}
+.layui-nav-tree .layui-nav-item {
+  border-bottom: 1px #35606e solid;
+}
+.layui-nav-tree .layui-nav-item a {
+  height: 50px;
+  line-height: 50px;
+}
+.layui-nav-item a {
+  font-size: 18px;
+}
+.layui-nav-child dd a {
+  font-size: 16px;
+}
+.layui-icon img {
+  width: 20px;
+  height: 20px;
+}
+.layui-tab-title {
+  border-bottom: none;
+  border-color: transparent;
+}
+.layui-tab-title li {
+  background: url("../images/tab.png") center center no-repeat;
+  background-size: 100% 100%;
+  color: #fff;
+}
+.layui-tab-title .layui-this {
+  color: #fff;
+}
+.layui-tab-title .layui-this:after {
+  display: none;
+}
+.layui-tab-content {
+  margin: 15px 0px;
+  padding: 0px;
+}
+.mCustomScrollBox {
+  background: #0c4152;
+}
+.mCSB_scrollTools {
+  width: 10px !important;
+}
+.mCSB_inside > .mCSB_container {
+  margin-right: 0px !important;
+}
+.layui-nav .layui-this:after,
+.layui-nav-bar,
+.layui-nav-tree .layui-nav-itemed:after {
+  display: none;
+}
+
+/*版权信息*/
+.layui-footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  color: rgb(102, 102, 102);
+  text-align: center;
+}
+body {
+  background: -webkit-linear-gradient(
+    #027a8d,
+    #054077,
+    #015561
+  ); /* Safari 5.1 - 6.0 */
+}
+.layui-show {
+  height: 100% !important;
+}
+iframe {
+  height: 100% !important;
+}
+.layui-nav-child dd {
+  background: #07676a;
+}
+.layui-nav .layui-nav-child a {
+  color: white;
+  font-size: 18px;
+}
+.layui-anim-upbit {
+  background-color: #07676a;
+}

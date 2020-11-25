@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>主界面-美发店管理系统</title>
+<meta name="keywords" content="美发店管理系统">
+<meta name="description" content="美发店管理系统">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="layui/css/layui.css" media="all">
+<link rel="stylesheet" href="css/main.css" media="all">
+</head>
+<body>
+	<div class="layui-layout">
+		<!-- 头部区域 -->
+		<div class="layui-header">
+			<ul class="box">
+				<li class="header-left"><a href="javascript:;"
+					class="btnHeader flexible" title="侧边伸缩"> <i
+						class="layui-icon layui-icon-shrink-right"></i>
+				</a> <a href="javascript:;" class="btnHeader refresh" title="刷新"> <i
+						class="layui-icon layui-icon-refresh-3"></i>
+				</a></li>
+				<li class="header-right"><span class="navHeader">
+				</span> <a href="javascript:;" class="btnHeader logout">安全退出</a></li>
+			</ul>
+		</div>
+		<!-- 侧边菜单 -->
+		<div class="layui-side">
+			<div class="layui-side-scroll">
+				<div class="layui-logo" lay-href="html/index.html">
+					<img src="images/logo.png" style="width: 40px; margin: 10px" /> <span>美发店管理系统</span>
+				</div>
+				<ul class="layui-nav layui-nav-tree" lay-filter="nav">
+					<li data-name="get" class="layui-nav-item layui-this"><a
+						href="javascript:;" lay-href="html/info/index.html"
+						class="nav-tab" lay-id="home1" data-type="tabChange"
+						lay-tips="网站信息"> <i class="layui-icon layui-icon-website"></i><label>首页</label>
+					</a></li>
+					
+					<li data-name="get" class="layui-nav-item"><a
+						href="javascript:;" lay-href="html/user/index.html"
+						class="nav-tab" lay-id="user" data-type="tabAdd"
+						lay-tips="会员管理"> <i class="layui-icon layui-icon-carousel"></i><label>会员管理</label>
+					</a></li>
+
+					<li data-name="get" class="layui-nav-item"><a
+						href="javascript:;" lay-href="html/staff/index.html"
+						class="nav-tab" lay-id="staff" data-type="tabAdd"
+						lay-tips="员工管理"> <i class="layui-icon layui-icon-carousel"></i><label>员工管理</label>
+					</a></li>
+					
+					<li data-name="get" class="layui-nav-item"><a
+						href="javascript:;" lay-href="html/product/index.html"
+						class="nav-tab" lay-id="product" data-type="tabAdd"
+						lay-tips="产品管理"> <i class="layui-icon layui-icon-carousel"></i><label>产品管理</label>
+					</a></li>
+
+					<li data-name="get" class="layui-nav-item"><a
+						href="javascript:;" lay-href="html/consume/index.html"
+						class="nav-tab" lay-id="consume" data-type="tabAdd"
+						lay-tips="消费管理"> <i class="layui-icon layui-icon-carousel"></i><label>消费管理</label>
+					</a></li>
+					
+					
+					<li data-name="get" class="layui-nav-item"><a
+						href="javascript:;" lay-href="html/sub/index.html"
+						class="nav-tab" lay-id="sub" data-type="tabAdd"
+						lay-tips="预约管理"> <i class="layui-icon layui-icon-carousel"></i><label>预约管理</label>
+					</a></li>
+					
+					<li data-name="get" class="layui-nav-item"><a
+						href="javascript:;" lay-href="html/count/index.html"
+						class="nav-tab" lay-id="count" data-type="tabAdd"
+						lay-tips="统计"> <i class="layui-icon layui-icon-carousel"></i><label>统计</label>
+					</a></li>
+					
+
+				</ul>
+			</div>
+		</div>
+		<!-- 主体内容 -->
+		<div class="layui-bodier" style="background-color: #314552;">
+			<div class="layui-tab" lay-filter="tab" lay-allowClose="true">
+				<ul class="layui-tab-title">
+					<li class="firstTab layui-this" lay-id="home1">网站信息</li>
+				</ul>
+				<div class="layui-tab-content">
+					<div class="layui-tab-item layui-show">
+						<iframe src="html/info/index.html" frameborder="0" name="tabFrame"
+							class="tabFrame"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 版权信息 -->
+		<div class="layui-footer">
+			<span></span>
+		</div>
+	</div>
+</body>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script src="js/main.js" charset="utf-8"></script>
+<script src="../../js/public.js" charset="utf-8"></script>
+<script>
+	layui.use('form', function() {
+		var form = layui.form;
+		var $ = layui.jquery;
+	});
+</script>
+
+</html>

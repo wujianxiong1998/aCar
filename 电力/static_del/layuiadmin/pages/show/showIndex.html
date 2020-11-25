@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>后台管理系统</title>
+	<meta name="keywords" content="后台管理系统">
+	<meta name="description" content="后台管理系统">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+	<style>
+		.layui-row {
+			background: linear-gradient(to right, #104953, #2bafc2, #025c6848);
+			padding: 0px 30px 0px 0px;
+			text-align: center;
+			margin-bottom: 15px;
+		}
+
+		.layui-row .layui-col-xs2 .num {
+			color: #fff;
+			padding: 20px;
+			font-size: 24px;
+		}
+
+		.layui-row .layui-col-xs2 .titlename {
+			color: #b4bfcb;
+			font-weight: 800;
+			padding: 10px;
+			font-size: 16px;
+		}
+
+		.layui-row .layui-col-xs2:hover {
+			background: #00444b;
+		}
+
+
+
+
+		.btn {
+			background: #0e799c;
+			padding: 0px 24px;
+		}
+
+		.btnSearch {
+			background: #0e799c;
+			padding: 0px 24px;
+		}
+
+		.layui-form-item .layui-inline {
+			background: -webkit-linear-gradient(to right, #027a8d,
+					#054077,
+					transparent);
+			/* Safari 5.1 - 6.0 */
+		}
+
+		.layui-laypage a,
+		.layui-laypage span {
+			background-color: transparent;
+			border: none
+		}
+
+		.layui-laypage .layui-laypage-curr .layui-laypage-em {
+			background-color: #0e799c
+		}
+
+		.btnAdd {
+			background-color: #ff8e2f
+		}
+
+		.edit {
+			background-color: #1bb2e4;
+			color: #fff;
+			padding: 0px 12px;
+			border-radius: 0px
+		}
+
+		.del {
+			background-color: #ff4545;
+			color: #fff;
+			padding: 0px 12px;
+			border-radius: 0px
+		}
+
+		.recommend {
+			background-color: #009688;
+			color: #fff;
+			padding: 0px 12px;
+			border-radius: 0px
+		}
+
+		.check {
+			background-color: #ff8e2f;
+			color: #fff;
+			padding: 0px 12px;
+			border-radius: 0px
+		}
+
+		.layer-class .layui-layer-ico {
+			background: url(../../images/icon.png) no-repeat !important;
+			background-size: 100% 100% !important;
+		}
+
+		.layer-class .layui-layer-title {
+			padding: 0px 50px !important;
+			font-size: 14px;
+			text-align: left;
+			color: #fff;
+			background: #0c4152
+		}
+
+		.layer-class .layui-layer-btn {
+			text-align: center
+		}
+
+		.layui-row .layui-col-xs2 {
+			width: 20%;
+		}
+
+		.layui-row .layui-col-xs2 .title {
+			padding: 20px auto;
+		}
+
+		.seace .seacrt {
+			border-top-left-radius: 5px;
+			border-bottom-left-radius: 5px;
+			width: 10%;
+		}
+
+		.seace .layui-btn {
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+		}
+
+		.seace {
+			display: flex;
+		}
+
+		.archives {
+			width: 100%;
+			height: 100%;
+		}
+
+		.layui-table-view {
+			border-color: #0764646b;
+		}
+
+		.layui-table-header {
+			border-color: #0764646b;
+		}
+
+		th {
+			border-color: #0764646b;
+		}
+
+		.layui-table {
+			background: linear-gradient(to right, #104953, #2bafc2, #025c6848);
+		}
+
+		.layui-table tbody tr {
+			color: #87b4c7;
+			border-color: none;
+		}
+
+		.layui-table th,
+		.layui-table td {
+			border-color: #0764643f;
+			color: rgb(211, 212, 212);
+		}
+
+		.layui-table tbody tr:hover {
+			background-color: #0095c0;
+			color: #fff;
+		}
+
+		.layui-table thead tr {
+			background: linear-gradient(to right, #04404b, #007585fa);
+			color: #fff;
+		}
+
+		.layui-time-outer {
+			display: flex;
+			justify-content: space-around;
+		}
+
+
+
+		.layui-color {
+			color: #cecece;
+		}
+
+		.layui-form-color {
+			color: #024C5A;
+		}
+
+		.layui-form-label {
+			width: 122px !important;
+			padding: 9px 5px !important;
+		}
+
+		.layui-card {
+			width: 500px !important;
+			background: linear-gradient(to right, #009688, #007585fa) !important;
+			color: white !important;
+		}
+
+		.layui-card-header {
+			border-bottom: none !important;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div class="layui-row">
+		<div class="layui-col-xs2">
+			<div class="num">
+				电站通讯
+			</div>
+			<div class="titlename">
+				通讯正常
+			</div>
+		</div>
+		<div class="layui-col-xs2">
+			<div class="num">
+				逆变器(117)
+			</div>
+			<div class="titlename">
+				<span class="layui-badge-dot"></span>
+				0台通讯中断,0台停运
+			</div>
+		</div>
+		<div class="layui-col-xs2">
+			<div class="num">
+				交流汇流(28)
+			</div>
+			<div class="titlename">
+				<span class="layui-badge-dot"></span>
+				0台通讯中断
+			</div>
+		</div>
+		<div class="layui-col-xs2">
+			<div class="num">
+				变(3)
+			</div>
+			<div class="titlename">
+				<span class="layui-badge-dot layui-bg-orange"></span>
+				0台通讯中断,0台停运
+			</div>
+		</div>
+		<div class="layui-col-xs2">
+			<div class="num">
+				告警
+			</div>
+			<div class="titlename">
+				<span class="layui-badge-dot layui-bg-cyan"></span>
+				12个故障,0个警告
+			</div>
+		</div>
+	</div>
+	<div class="layui-col-md4">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<div class="layui-form-item layui-time-outer" style="margin-bottom: 0px;">
+					<label class="layui-time">日</label>
+					<label class="layui-time">月</label>
+					<label class="layui-time">年</label>
+					<label class="layui-time">总</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="layui-col-md4">
+		<div class="layui-card">
+			<div class="layui-form-date" style="margin-left: 10px; ">
+				<input type="text" style="width: 280px; height: 30px;" placeholder="请选择日期" value=""
+					class="layui-laydate" id="chooseDate" lay-verify="required" required>
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-form-color">
+		<form class="layui-form">
+			<div class="layui-form-item">
+				<label class="layui-form-label layui-color">装机容器:6wmp </label>
+				<label class="layui-form-label layui-color">天气: 晴</label>
+				<label class="layui-form-label layui-color">温度：-2</label>
+				<label class="layui-form-label layui-color">累计辐照:4.76kwh</label>
+				<label class="layui-form-label layui-color">满发小时:3.8小时</label>
+				<label class="layui-form-label layui-color">发电量:22.6wh</label>
+				<label class="layui-form-label layui-color">每瓦特发电:81.01%</label>
+				<label class="layui-form-label layui-color" style="float: right;">数量</label>
+			</div>
+		</form>
+
+	</div>
+	<div class="layui-row layui-col-space10" style="padding: 10px;">
+		<div class="layui-col-xs6">
+			<div class="layui-card">
+				<div class="layui-card-header">今日功率 <span>2020-12-12</span></div>
+				<div class="layui-card-body">
+					<div id="main" style="width: 480px;margin-top: -20px; height:300px"></div>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-xs6">
+			<div class="layui-card">
+				<div class="layui-card-header">今日功率 <span>2020-12-12</span></div>
+				<div class="layui-card-body">
+					<div id="main1" style="width: 480px;margin-top: -20px; height:300px"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="layui-row layui-col-space10" style="padding: 10px;">
+		<div class="layui-col-xs8">
+			<div class="layui-row">
+				<div class="layui-col-xs10" style="color: white;">
+					<span style="float: left;">
+						逆变器排行榜
+					</span>
+				</div>
+				<div style="float: right; color: white;">查看</div>
+			</div>
+			<table class="layui-hide" lay-skin="line" id="tableList" lay-filter="demo"></table>
+		</div>
+		<div class="layui-col-xs4" style="color: white;">
+			<div class="layui-col-xs11" style="margin-left: 30px;">
+				<span style="float: left;">发电量</span>
+			</div>
+			<div style="margin-bottom: 96px; margin-top: 50px;">
+				<div class="layui-col-xs7">逆变器电量</div>
+				<div class="layui-col-xs5">23.49MWH</div>
+			</div>
+			<div style="margin-bottom: 149px; margin-top: 50px;">
+				<div class="layui-col-xs7">逆变器电量</div>
+				<div class="layui-col-xs5">23.49MWH</div>
+			</div>
+			<div style="margin-bottom: 50px; margin-top: 50px;">
+				<div class="layui-col-xs7">逆变器电量</div>
+				<div class="layui-col-xs5">23.49MWH</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script src="../../layui/layui.js" charset="utf-8">
+</script>
+<script src="../../js/echarts.min.js"></script>
+<script type="text/javascript">
+	layui.use('element', function () {
+		var element = layui.element;
+	});
+
+	layui.use(['table'], function () {
+		var table = layui.table;
+		table.render({
+			elem: '#tableList'
+			, url: 'json/interver.json'
+			//,toolbar:true
+			, defaultToolbar: ['filter']
+			, cols: [[
+				{ field: 'interver', title: '逆变器名称', align: 'center', style: "    background:transparent;" },
+				{ field: 'hours', title: '满发小时', align: 'center', style: "    background:transparent;" },
+				{ field: 'electricity ', title: '发电量', align: 'center', style: "    background: transparent;" },
+				{ field: 'PR', title: 'PR', align: 'center', style: "    background: transparent;" }
+			]],
+			page: true
+		});
+	})
+
+	layui.use('laydate', function () {
+		var laydate = layui.laydate;
+
+		laydate.render({
+			elem: '#chooseDate'
+			, type: 'datetime'
+			, trigger: 'click'//呼出事件改成click
+			//,format: 'yyyy-MM-dd HH:mm:ss' //可任意组合
+		});
+
+		laydate.render({
+			elem: '#test1'
+			, type: 'date'
+			, trigger: 'click'
+		});
+
+		laydate.render({
+			elem: '#test2'
+			, type: 'date'
+			, trigger: 'click'
+		});
+
+
+
+
+		// 基于准备好的dom，初始化echarts实例
+		var myChart = echarts.init(document.getElementById('main'));
+
+		var option = {
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					type: 'cross',
+					crossStyle: {
+						color: '#999'
+					}
+				}
+			},
+			toolbox: {
+				feature: {
+					dataView: { show: true, readOnly: false },
+					magicType: { show: true, type: ['line', 'bar'] },
+					restore: { show: true },
+					saveAsImage: { show: true }
+				}
+			},
+			legend: {
+				data: ['降水量', '平均温度']
+			},
+			xAxis: [
+				{
+					type: 'category',
+					data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+					axisPointer: {
+						type: 'shadow'
+					}
+
+				}
+			],
+			yAxis: [
+				{
+					type: 'value',
+					name: '水量',
+					min: 0,
+					max: 250,
+					interval: 50,
+					axisLabel: {
+						formatter: '{value} ml'
+					}
+				},
+				{
+					type: 'value',
+					name: '温度',
+					min: 0,
+					max: 25,
+					interval: 5,
+					axisLabel: {
+						formatter: '{value} °C'
+					}
+				}
+			],
+			series: [
+				{
+					name: '降水量',
+					type: 'bar',
+					data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+				},
+				{
+					name: '平均温度',
+					type: 'line',
+					yAxisIndex: 1,
+					data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+				}
+			]
+		};
+
+		var myChart1 = echarts.init(document.getElementById('main1'));
+		var option1 = {
+			tooltip: {
+				trigger: 'axis'
+			},
+			legend: {
+				data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+			},
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			toolbox: {
+				feature: {
+					saveAsImage: {}
+				}
+			},
+			xAxis: {
+				type: 'category',
+				boundaryGap: false,
+				data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+			},
+			yAxis: {
+				type: 'value'
+			},
+			series: [
+				{
+					name: '邮件营销',
+					type: 'line',
+					stack: '总量',
+					data: [0, 132, 101, 134, 90, 230, 210, 320, 332, 301, 334, 390, 330, 320]
+				},
+				{
+					name: '联盟广告',
+					type: 'line',
+					stack: '总量',
+					data: [0, 182, 191, 234, 290, 330, 310, 820, 932, 901, 934, 1290, 1330, 1320]
+				}
+			]
+		};
+
+		// 使用刚指定的配置项和数据显示图表。
+		myChart1.setOption(option1);
+		myChart.setOption(option);
+
+	});
+</script>
+
+</html>

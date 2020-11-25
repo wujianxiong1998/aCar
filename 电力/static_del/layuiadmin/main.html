@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>主页-管理系统</title>
+    <meta name="keywords" content="后台管理系统">
+    <meta name="description" content="后台管理系统">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/main.css" media="all">
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+    <style>
+        .layui-card {
+            background: transparent;
+            color: white;
+        }
+
+        .layui-card-header {
+            color: white;
+            border-bottom: none
+        }
+
+        .layui-card-header .btns {
+            padding: 4px 10px;
+            border: 1px solid #029bbb;
+            background: #055254;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .layui-tree-txt {
+            color: white;
+        }
+
+        .layui-header .header-left .layui-icon {
+            font-size: 6px;
+            line-height: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-layout">
+        <!-- 头部区域 -->
+        <div class="layui-header">
+            <ul class="box">
+                <li class="header-left" id="headerLeft">
+                    <i class="layui-icon layui-icon-triangle-d"></i>
+                    <div id="headerLeftTRN"
+                        style="position: absolute; top: 60px;width: 400px; height: 600px; display: none;  background: #065e61;">
+                        <div>
+                            <div class="layui-card" id="show">
+                                <div class="layui-card-header" style="text-align: left;">
+                                    <p style="display: flex; justify-content: space-between;align-items: center;">
+                                        <span>最近访问</span>
+                                        <i class="layui-icon layui-icon-search" style="font-size: 20px;"
+                                            id="searct"></i>
+                                    </p>
+                                    <span class="btns">demo_solar</span>
+                                    <span class="btns">Envision</span>
+                                    <hr>
+                                    <div id="test1"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                <a href="javascript:;" class="btnHeader logout" style="float:right;"><img src="images/logout.png"></a>
+                <li class="header-right" id="headerRight" style="position: relative;">
+                    <i class="layui-icon layui-icon-triangle-d"></i>
+                    <div id="headerRightTRN"
+                        style="display: none; position: absolute; top: 60px;left: -474px;background: #065e61;">
+                        <ul class="layui-nav" style="padding:0 10px;display:flex;" lay-filter="">
+                            <li class="layui-nav-item"><a lay-href="pages/show/showInfoAdd.html" class="nav-tab"
+                                    lay-id="useradd" data-type="tabAdd">数据展示</a></li>
+                            <li class="layui-nav-item layui-this"><a lay-href="pages/show/showTypes.html"
+                                    class="nav-tab" lay-id="user2" data-type="tabAdd">
+                                    数据检测
+                                </a></li>
+                            <li class="layui-nav-item"><a lay-href="pages/show/showIndex.html" class="nav-tab"
+                                    lay-id="user3" data-type="tabAdd">
+                                    数据分析
+                                </a></li>
+                            <li class="layui-nav-item"><a lay-href="pages/show/showBrand.html" class="nav-tab"
+                                    lay-id="user4" data-type="tabAdd">
+                                    地区分布
+                                </a></li>
+                            <li class="layui-nav-item"><a lay-href="pages/show/showData.html" class="nav-tab"
+                                    lay-id="user5" data-type="tabAdd">
+                                    战术数据
+                                </a></li>
+                        </ul>
+
+                        <div style="padding: 10px;display: flex;">
+                            <hr>
+                            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                                <li class="layui-nav-item layui-nav-itemed">
+                                    <a href="javascript:;">资产概览</a>
+                                </li>
+                                <li class="layui-nav-item">
+                                    <a href="javascript:;">告警服务</a>
+                                </li>
+                            </ul>
+                            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                                <li class="layui-nav-item layui-nav-itemed">
+                                    <a href="javascript:;">资产概览</a>
+                                </li>
+                                <li class="layui-nav-item">
+                                    <a href="javascript:;">告警服务</a>
+                                </li>
+                            </ul>
+                            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                                <li class="layui-nav-item layui-nav-itemed">
+                                    <a href="javascript:;">资产概览</a>
+                                </li>
+                                <li class="layui-nav-item">
+                                    <a href="javascript:;">告警服务</a>
+                                </li>
+                            </ul>
+                            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                                <li class="layui-nav-item layui-nav-itemed">
+                                    <a href="javascript:;">资产概览</a>
+                                </li>
+                                <li class="layui-nav-item">
+                                    <a href="javascript:;">告警服务</a>
+                                </li>
+                            </ul>
+                            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                                <li class="layui-nav-item layui-nav-itemed">
+                                    <a href="javascript:;">资产概览</a>
+                                </li>
+                                <li class="layui-nav-item">
+                                    <a href="javascript:;">告警服务</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- 主体内容 -->
+        <div class="layui-bodier">
+            <div class="layui-tab" style="width:100%;height: 100%;" lay-filter="tab" lay-allowClose="true">
+                <ul class="layui-tab-title" style="display: none;">
+                    <li class="firstTab layui-this" lay-id="">首页</li>
+                </ul>
+                <div class="layui-tab-content" style="width:100%;height: 100%;">
+                    <div class="layui-tab-item layui-show" style="width:100%;height: 100%;">
+                        <iframe id="iframe" src="pages/show/showInformation.html" frameborder="0" style="height: 100%;"
+                            name="tabFrame" class="tabFrame"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 版权信息 -->
+        <div class="layui-footer">
+            <span></span>
+        </div>
+    </div>
+</body>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script src="js/common.js"></script>
+<script src="js/main.js" charset="utf-8"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.mCustomScrollbar.js"></script>
+<script>
+    layui.use('tree', function ()
+    {
+        var tree = layui.tree;
+
+        //渲染
+        var inst1 = tree.render({
+            elem: '#test1'  //绑定元素
+            , data: [{
+                title: 'DEMO_SOLAR(2)' //一级菜单
+                , children: [{
+                    title: 'Apollo' //二级菜单
+                }, {
+                    title: 'helios' //二级菜单
+                }]
+            }, {
+                title: 'demo_solar(13)' //一级菜单
+                , children: [{
+                    title: 'WF001' //二级菜单
+                }, {
+                    title: 'WF002' //二级菜单
+                }]
+            }]
+        });
+    });
+    layui.use(['element'], function ()
+    {
+        var $ = layui.jquery;
+        var element = layui.element;
+        var token = getToken();
+        console.log(token)
+        //获取当前用户菜单列表
+        $.ajax({
+            //url:'/admin/api/menu/getFunsRole',
+            headers: {
+                "token": token
+            },
+            type: 'post',
+            dataType: "json",
+            async: false,
+            beforeSend: function ()
+            {
+                //console.log(JSON.stringify(data.field));
+            },
+            success: function (data)
+            {
+                var funlist = data.data;
+                if (funlist != null && funlist.length > 0) {
+                    var html = '';
+                    html += '<li data-name="get" class="layui-nav-item layui-this">' +
+                        '<a href="javascript:;" lay-href="pages/index.html" class="nav-tab" lay-id="0"' +
+                        'data-type="tabChange" lay-tips="首页">' +
+                        '<i class="layui-icon layui-icon-home"></i><label>首页</label>' +
+                        '</a></li>';
+                    $.each(funlist, function (index, value)
+                    {
+                        html += '<li data-name="get" class="layui-nav-item">' +
+                            '<a href="javascript:;" lay-href="' + value.menu_url + '" class="nav-tab" lay-id="' + (index + 1) + '" lay-tips="' + value.title + '" ';
+                        if (value.children == null) {
+                            html += 'data-type="tabAdd"';
+                        }
+                        html += '><i class="layui-icon layui-icon-cart-simple"></i><label>' + value.title + '</label></a>';
+                        if (value.children != null && value.children.length > 0) {
+                            $.each(value.children, function (idx, val)
+                            {
+                                html += '<dl class="layui-nav-child"><dd><a lay-href="' + val.menu_url + '" class="nav-tab" lay-id="' + (index + 1) + "_" + idx + '" data-type="tabAdd">' +
+                                    '<i class="layui-icon"></i><label>' + val.title + '</label>' +
+                                    '</a></dd></dl>';
+                            });
+                        }
+                        html += '</li>';
+                    });
+                    $('#menu').html(html);
+                    element.render();
+                } else {
+                    layui.alert('当前用户未绑定权限！', { icon: 2 });
+                }
+            },
+            error: function (data)
+            {
+                //do something
+                layer.msg('与服务器连接失败', { icon: 2 });
+            }
+        });
+    });
+    //滚动条样式
+    (function ($)
+    {
+        $(window).on("load", function ()
+        {
+            $(".layui-side-scroll").mCustomScrollbar({
+                theme: "light-3",
+                scrollButtons: {
+                    enable: true
+                }
+            });
+        });
+    })(jQuery);
+</script>
+<SCript>
+    $('#headerRight').mouseenter(function ()
+    {
+        $('#headerRightTRN').css('display', 'block')
+    })
+    $('#headerRight').mouseleave(function ()
+    {
+        $('#headerRightTRN').css('display', 'none')
+    })
+    $('#headerLeft').mouseenter(function ()
+    {
+        $('#headerLeftTRN').css('display', 'block')
+    })
+    $('#headerLeft').mouseleave(function ()
+    {
+        $('#headerLeftTRN').css('display', 'none')
+    })
+</SCript>
+
+</html>

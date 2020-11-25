@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>新增账号-网站后台管理系统</title>
+	<meta name="keywords" content="网站后台管理系统">
+	<meta name="description" content="网站后台管理系统">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+	<style>
+	.popIframeBody {background: rgb(247,247,247);}
+	.popIframeContent {padding:20px;background: rgb(255,255,255);}
+	.popIframeBtn {padding:20px 0px;border-top:1px rgb(235,235,235) solid;text-align: center;}
+	</style>
+</head>
+<body class="popIframeBody">
+
+<form class="layui-form">
+	<div class="popIframeContent">
+		
+		<div class="layui-form-item">
+			<div class="layui-form-label">会员编号</div>
+			<div class="layui-input-block">
+				<input type="text" name="code" required lay-verify="required" placeholder="请输入会员编号" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		 
+		 <div class="layui-form-item">
+			<div class="layui-form-label">会员名称</div>
+			<div class="layui-input-block">
+				<input type="text" name="user_name" required lay-verify="required" placeholder="请输入会员名称" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		 
+		 <div class="layui-form-item">
+					<label class="layui-form-label">性别</label>
+					<div class="layui-input-block">
+						<select name="sex" class="layui-input" required lay-verify="required">
+                        	<option value="">请选择</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                 		</select>
+					</div>
+		</div>
+		 
+		 <div class="layui-form-item">
+			<div class="layui-form-label">手机号</div>
+			<div class="layui-input-block">
+				<input type="text" name="phone" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		 
+		 <div class="layui-form-item">
+					<label class="layui-form-label">是否高级会员</label>
+					<div class="layui-input-block">
+						<select name="is_status" class="layui-input" required lay-verify="required">
+                        	<option value="">请选择</option>
+                            <option value="是">是</option>
+                            <option value="否">否</option>
+                 		</select>
+					</div>
+		</div>
+		 
+		 <div class="layui-form-item">
+			<div class="layui-form-label">余额</div>
+			<div class="layui-input-block">
+				<input type="text" name="balance" required lay-verify="required" placeholder="请输入余额" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		
+		<div class="layui-form-item">
+			<div class="layui-form-label">备注</div>
+			<div class="layui-input-block">
+				<input type="text" name="remarks" required lay-verify="required" placeholder="请输入备注" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		
+	</div>
+	<div class="popIframeBtn">
+		<button class="layui-btn" lay-submit lay-filter="submit">保存</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+</body>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../../js/public.js" charset="utf-8"></script>
+<script>
+layui.use(['form'], function(){
+	var form = layui.form;
+	var $ = layui.jquery;
+	//监听提交
+	form.on('submit(submit)',function(data){
+		SubmitTable('/admin/user/add',data.field,'post',true,'tableList');
+		return false;
+	});
+	
+});
+</script>
+</html>

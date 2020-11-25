@@ -1,0 +1,16 @@
+{
+	"code":0,
+	"msg":"",
+	"count":5,
+	"data":[{
+		"carouselId":"001",
+		"carouselType":"1",
+		"carouselShow":"1",
+		"carouselOrder":"1",
+		"carouselTitle":"海报1",
+		"carouselSubTitle":"这是什么什么海报1",
+		"carouselContent":"内容1",
+		"carouselPicture":"../../../upload/banner01.jpg",
+		"carouselUrl":"index.html"
+	}]
+}

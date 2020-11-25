@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta name="keywords" content="后台管理系统">
+    <meta name="description" content="后台管理系统">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/main.css" media="all">
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=IfERrnR55USDhRr1pGbN0aFp3XsNBkHd"></script>
+    <style>
+        .layui-row {
+            padding: 10px 0px 10px 0px;
+        }
+
+        html {
+            height: 800px;
+        }
+
+        body {
+            height: 100%;
+
+        }
+
+        .archives {
+            width: 100%;
+            height: 100%;
+        }
+
+        .btnSearch {
+            background: #0e799c;
+            padding: 0px 24px;
+        }
+
+        .layui-form-item .layui-inline {
+            margin-bottom: 10px;
+        }
+
+        .layui-laypage a,
+        .layui-laypage span {
+            background-color: transparent;
+            border: none
+        }
+
+        .layui-laypage .layui-laypage-curr .layui-laypage-em {
+            background-color: #0e799c
+        }
+
+        .btnAdd {
+            background-color: #ff8e2f
+        }
+
+        .edit {
+            background-color: #1bb2e4;
+            color: #fff;
+            padding: 0px 12px;
+            border-radius: 0px
+        }
+
+        .del {
+            background-color: #ff4545;
+            color: #fff;
+            padding: 0px 12px;
+            border-radius: 0px
+        }
+
+        .layer-class .layui-layer-ico {
+            background: url(../../images/icon.png) no-repeat !important;
+            background-size: 100% 100% !important;
+        }
+
+        .layer-class .layui-layer-title {
+            padding: 0px 50px !important;
+            font-size: 14px;
+            text-align: left;
+            color: #fff;
+            background: #0c4152
+        }
+
+        .layer-class .layui-layer-btn {
+            text-align: center
+        }
+
+        .map-header {
+            background: #26323e;
+        }
+
+        .layui-col-xs3 {
+            text-align: center;
+            color: #9199a1;
+        }
+
+        #container {
+            height: 700px;
+        }
+
+        .map-right {
+            background: #323c45;
+            height: 700px;
+        }
+
+        .map-right .title {
+            padding: 10px 0px 10px 30px;
+            color: #489c8c;
+            font-size: 24px;
+        }
+
+        .staste {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            background: #465059;
+            color: #c1cad1;
+        }
+
+        .layui-card,
+        .layui-card-header {
+            font-size: 16px;
+            background: transparent;
+            color: #c1cad1;
+        }
+
+        .layui-card-header span {
+            font-size: 12px;
+        }
+
+        .layui-card-body {
+            padding: 0;
+        }
+
+        .layui-badge {
+            height: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="archives">
+        <div class="map-header layui-row " id="acc">
+            <div class="layui-col-xs3" style="text-align: center;margin-top: 10px;">
+                进入集控集团
+                <i class=" layui-icon layui-icon-right" style="font-size: 18px;"></i>
+            </div>
+            <div class="layui-col-xs3">
+                电站总数:
+                <span style="color:#55a5bc;font-size: 28px;">2</span>
+            </div>
+            <div class="layui-col-xs3">
+                电站总容量:
+                <span style="color:#55a5bc;font-size: 28px;">28.01</span>
+                MWp
+            </div>
+            <div class="layui-col-xs3">
+                累计发电量:
+                <span style="color:#55a5bc;font-size: 28px;">118.12</span>
+                GWh
+            </div>
+        </div>
+        <div class="layui-row" style="padding:0px;">
+            <div class="map layui-col-xs6">
+                <div id="container"></div>
+            </div>
+            <div class="layui-col-xs6 layui-bg-black map-right">
+                <p class="title">APOLLO(6.1MW)</p>
+                <p style="color: #6d757b; font-size: 18px;  text-align: center;">
+                    <span>电站数:<b style="color: #fff;">
+                            2
+                        </b> </span>
+                    <span>电站总容量:<b style="color: #fff;">
+                            28.91MWp </b></span>
+                    <span style="color: aqua;">
+                        更多指标>>
+                    </span>
+                </p>
+                <div class="layui-progress layui-progress-big">
+                    <div class="layui-progress-bar " lay-percent="10%"></div>
+                </div>
+                <div class="staste"
+                    style="display: flex; justify-content: space-between;text-align: center;align-items: center;">
+                    <p style="margin-top: 0;"> <span class="layui-badge layui-bg-blue"></span> 集中式 1个(22MWp)</p>
+                    <p>分布式 1个(6MWp) <span class="layui-badge layui-bg-blue"></span></p>
+                </div>
+                <div style="margin:10px;">
+                    <canvas id="canvas" style="margin:20px;" data-percent="21"></canvas>
+                    <canvas id="canvasEle" width="200" height="200" style="margin:20px;"></canvas>
+                    <canvas id="myCanvas" width="200" height="200" style="margin:20px;"></canvas>
+                </div>
+                <div class="layui-row layui-col-space10" style="padding: 10px;">
+                    <div class="layui-col-xs5">
+                        <div class="layui-card">
+                            <div class="layui-card-header">今日功率 <span>2020-12-12</span></div>
+                            <div class="layui-card-body">
+                                <div id="main" style="width: 900px;margin-top: -20px; height:300px"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../js/jquery.min.js"></script>
+
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../../js/main.js"></script>
+<!-- LavM7Uv77DPhpmGXudGsFpfVDR8p4khI -->
+<script type="text/javascript">
+
+
+    layui.use(['element'], function ()
+    {
+        //var $ = layui.jquery;
+        var element = layui.element;
+        var map = new BMapGL.Map('container'); // 创建Map实例
+        map.enableScrollWheelZoom();
+        map.setMapType(BMAP_EARTH_MAP);
+        map.centerAndZoom(new BMapGL.Point(116.404, 39.915), 8); // 初始化地图,设置中心点坐标和地图级别
+        var point = new BMapGL.Point(116.404, 39.915);
+        var marker = new BMapGL.Marker(point)        // 创建标注   
+        map.addOverlay(marker);
+
+        var pointt = new BMapGL.Point(115.6, 37.85);
+        var markert = new BMapGL.Marker(pointt)        // 创建标注   
+        map.addOverlay(markert);
+        var windowcon = window;
+        // console.log(window);
+        function fun(t, id, url)
+        {
+            var tabFrame = '<iframe src="' + url + '" class="tabFrame" frameborder="0"></iframe>';
+            tab.tabAdd(t, id, tabFrame);
+            //tab.tabChange(id);
+        }
+        var tab = {
+            tabAdd: function (t, id, tabFrame)
+            {
+                // alert(t)
+                // alert(id)
+                // alert(tabFrame)
+                //新增一个Tab项
+                window.parent.layui.element.tabAdd('tab', {
+                    title: t //用于演示
+                    , content: tabFrame//内容
+                    , id: id //Tab项唯一ID
+                });
+                window.parent.layui.element.tabChange('tab', id);//切换到新增Tab项
+            }
+            , tabDelete: function (othis)
+            {
+                //删除指定Tab项
+                element.tabDelete('tab', id); //删除：“商品管理”
+                othis.addClass('layui-btn-disabled');;
+            }
+            , tabChange: function (id)
+            {
+                //切换到指定Tab项
+                element.tabChange('tab', id); //切换到：用户管理
+            }
+        };
+
+
+
+
+        markert.addEventListener("click", function (e)
+        {
+            //alert('点击位置经纬度：' + e.latlng.lng + ',' + e.latlng.lat);
+            //console.log($('#acc'));
+            // fun()
+        });
+        marker.addEventListener("click", function (e)
+        {
+            console.log(e);
+            alert('点击位置经纬度：' + e.latLng.lng + ',' + e.latLng.lat);
+            fun("地区分布", "user4", "pages/show/showBrand.html");
+        });
+
+    });
+</script>
+
+<script src="../../js/echarts.min.js"></script>
+<SCript type="text/javascript">
+    layui.use('element', function ()
+    {
+        var element = layui.element;
+    });
+    var myChart = echarts.init(document.getElementById('main'));
+    var option = {
+        xAxis: {
+            type: 'category',
+        },
+        yAxis: {
+            type: 'value'
+        },
+        axisLine: {       //y轴不显示
+            "show": false
+        },
+        axisTick: {       //y轴刻度线不显示
+            "show": false
+        },
+        axisLabel: {
+            color: "#BACCF4"  //坐标轴的文本颜色
+        },
+        series: [
+            {
+                name: '邮件营销',
+                type: 'line',
+                stack: '总量',
+                data: [0, 0, 0, 0, 103, 145, 145, 123, 145, 124, 125, 144, 152, 172, 190, 234, 242, 342, 234.232]
+            },
+        ]
+    };
+    myChart.setOption(option);
+</SCript>
+
+
+<script>
+    var $ = document.querySelector.bind(document);
+    var canvas = $('#canvas'),
+        canvasWth = 200;
+    canvasHgt = 200;
+    canvas.width = canvasWth;
+    canvas.height = canvasHgt;
+    var ctx = canvas.getContext('2d');
+
+    // 灰色圆环
+    ctx.beginPath();
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = '#fff';
+    ctx.arc(100, 100, 90, 0, 2 * Math.PI, true); // true：逆时针 false：顺时针
+    ctx.stroke();
+    ctx.closePath();
+
+    // 旋转改变开始位置
+    ctx.translate(100, 100);
+    ctx.rotate(2 * Math.PI * (270 / 360));
+    ctx.translate(-200, -200);
+
+    // 绿色进度(+号表示字符串转整数)
+    var percent = +canvas.dataset.percent;
+    function progress()
+    {
+        if (percent <= 100) {
+            // 角度
+            percent = percent > 100 ? 100 : percent;
+            var ang = Math.round(360 * percent / 100 % 360);
+            // 进度条
+            ctx.beginPath();
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = '#007acc';
+            ctx.arc(200, 200, 90, 2 * Math.PI * (ang / 360), 2 * Math.PI, true); // true表示顺时针
+            ctx.stroke();
+            ctx.closePath();
+            // 文本
+            ctx.save(); // 保存上一个状态
+            ctx.translate(200, 200);
+            ctx.rotate(2 * Math.PI * (-270 / 360));
+            ctx.translate(-200, -200);
+            ctx.clearRect(180, 180, 54, 30); // 清楚上次的文本绘制
+            ctx.font = '20px seris';
+            ctx.fillStyle = '#fff';
+            ctx.fillText(percent + '%', 180, 205);
+            ctx.restore(); // 恢复上一个状态
+            // 请求动画针
+            window.requestAnimationFrame(progress);
+        }
+    }
+    progress();
+</script>
+
+<script>
+    var ctx3 = document.getElementById("canvasEle").getContext('2d');
+    var step = 0;
+    function init2()
+    {
+        //清空canvas
+        ctx3.clearRect(0, 0, 200, 200);
+        step += 3;
+        //转化为弧度
+        var stepAngle = step * Math.PI / 180;
+        var deltaHeight = Math.sin(stepAngle) * 20;
+        var deltaHeightRight = Math.cos(stepAngle) * 20;
+        var y = 100 + deltaHeight;
+        //计算在左半圆上随着y值上下移动，对应的x值
+        var expression = 8100 - Math.pow((100 - y), 2);
+        var x = 100 - Math.sqrt(expression);
+        var rightY = 100 + deltaHeightRight;
+        var expressionRight = 8100 - Math.pow((100 - rightY), 2);
+        //取右侧的X坐标（同一个y值会有两个x坐标）
+        var rightX = 200 - (100 - Math.sqrt(expressionRight));
+        // alert("rightX:"+rightX+" rightY:"+rightY+" x:"+x+" y:"+y);
+        ctx3.lineWidth = 5;
+        ctx3.strokeStyle = "green";
+        ctx3.beginPath();
+        ctx3.arc(100, 100, 90, 0, Math.PI * 2, false);
+        ctx3.stroke();
+        // ctx3.fillStyle = "green";
+        ctx3.fillStyle = "rgba(0,222,255, 0.2)";
+        ctx3.beginPath();
+        ctx3.moveTo(x, y);
+        // ctx3.lineTo(rightX, rightY);
+        ctx3.bezierCurveTo(100, y - 30, 100, rightY - 30, rightX, rightY);
+        // ctx3.stroke();
+        //计算圆起始点（与X轴平行的直径的右侧端点）与圆左侧给定Y坐标的点
+        var distance = Math.sqrt(Math.pow((190 - x), 2) + Math.pow((100 - y), 2));
+        //sina=d/2r   a为夹角的一半  2a为两点的圆心角   Math.asin最终结果为弧度 如asin(1)=1/2*PI
+        var angle = Math.asin(distance / 180) * 2;
+        var distanceRight = Math.sqrt(Math.pow((190 - rightX), 2) + Math.pow((100 - rightY), 2));
+        var angleRight = Math.asin(distanceRight / 180) * 2;
+        // ctx3.beginPath();
+        //如果在左侧上半圆则用2PI-弧度
+        if (y < 100) {
+            angle = 2 * Math.PI - angle;
+        }
+        if (rightY < 100) {
+            angleRight = -angleRight;
+        }
+
+        ctx3.arc(100, 100, 90, angleRight, angle, false);
+
+        // ctx3.stroke();
+        ctx3.fill();
+
+        window.requestAnimationFrame(init2);
+
+    }
+    init2()
+</script>
+<script>
+    var ctx2 = document.getElementById("myCanvas").getContext('2d');
+
+    var step = 0;
+    function init()
+    {
+        //清空canvas
+        ctx2.clearRect(0, 0, 200, 200);
+        step += 3;
+        //转化为弧度
+        var stepAngle = step * Math.PI / 180;
+        var deltaHeight = Math.sin(stepAngle) * 20;
+        var deltaHeightRight = Math.cos(stepAngle) * 20;
+        var y = 100 + deltaHeight;
+        //计算在左半圆上随着y值上下移动，对应的x值
+        var expression = 8100 - Math.pow((100 - y), 2);
+        var x = 100 - Math.sqrt(expression);
+        var rightY = 100 + deltaHeightRight;
+        var expressionRight = 8100 - Math.pow((100 - rightY), 2);
+        //取右侧的X坐标（同一个y值会有两个x坐标）
+        var rightX = 200 - (100 - Math.sqrt(expressionRight));
+        // alert("rightX:"+rightX+" rightY:"+rightY+" x:"+x+" y:"+y);
+        ctx2.lineWidth = 5;
+        ctx2.strokeStyle = "green";
+        ctx2.beginPath();
+        ctx2.arc(100, 100, 90, 0, Math.PI * 2, false);
+        ctx2.stroke();
+        // ctx2.fillStyle = "green";
+        ctx2.fillStyle = "rgba(0,222,255, 0.2)";
+        ctx2.beginPath();
+        ctx2.moveTo(x, y);
+        // ctx2.lineTo(rightX, rightY);
+        ctx2.bezierCurveTo(100, y - 30, 100, rightY - 30, rightX, rightY);
+        // ctx2.stroke();
+        //计算圆起始点（与X轴平行的直径的右侧端点）与圆左侧给定Y坐标的点
+        var distance = Math.sqrt(Math.pow((190 - x), 2) + Math.pow((100 - y), 2));
+        //sina=d/2r   a为夹角的一半  2a为两点的圆心角   Math.asin最终结果为弧度 如asin(1)=1/2*PI
+        var angle = Math.asin(distance / 180) * 2;
+        var distanceRight = Math.sqrt(Math.pow((190 - rightX), 2) + Math.pow((100 - rightY), 2));
+        var angleRight = Math.asin(distanceRight / 180) * 2;
+        // ctx2.beginPath();
+        //如果在左侧上半圆则用2PI-弧度
+        if (y < 100) {
+            angle = 2 * Math.PI - angle;
+        }
+        if (rightY < 100) {
+            angleRight = -angleRight;
+        }
+
+        ctx2.arc(100, 100, 90, angleRight, angle, false);
+
+        // ctx2.stroke();
+        ctx2.fill();
+
+        window.requestAnimationFrame(init);
+
+    }
+    init()
+</script>
+
+</html>

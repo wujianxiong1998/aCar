@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta name="keywords" content="后台管理系统">
+    <meta name="description" content="后台管理系统">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/main.css" media="all">
+    <style>
+        .layui-row {
+            background: linear-gradient(to right, #104953, #2bafc2, #025c6848);
+            padding: 0px 30px 0px 0px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .layui-row .layui-col-xs2 .num {
+            color: #fff;
+            padding: 20px;
+            font-size: 24px;
+        }
+
+        .layui-row .layui-col-xs2 .titlename {
+            color: #b4bfcb;
+            font-weight: 800;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .layui-row .layui-col-xs2:hover {
+            background: #00444b;
+        }
+
+        .btn {
+            background: #0e799c;
+            padding: 0px 24px;
+        }
+
+        .btnSearch {
+            background: #0e799c;
+            padding: 0px 24px;
+        }
+
+        .layui-form-item .layui-inline {
+            background: -webkit-linear-gradient(to right, #027a8d,
+                    #054077,
+                    transparent);
+            /* Safari 5.1 - 6.0 */
+        }
+
+        .layui-laypage a,
+        .layui-laypage span {
+            background-color: transparent;
+            border: none
+        }
+
+        .layui-laypage .layui-laypage-curr .layui-laypage-em {
+            background-color: #0e799c
+        }
+
+        .btnAdd {
+            background-color: #ff8e2f
+        }
+
+        .edit {
+            background-color: #1bb2e4;
+            color: #fff;
+            padding: 0px 12px;
+            border-radius: 0px
+        }
+
+        .del {
+            background-color: #ff4545;
+            color: #fff;
+            padding: 0px 12px;
+            border-radius: 0px
+        }
+
+        .recommend {
+            background-color: #009688;
+            color: #fff;
+            padding: 0px 12px;
+            border-radius: 0px
+        }
+
+        .check {
+            background-color: #ff8e2f;
+            color: #fff;
+            padding: 0px 12px;
+            border-radius: 0px
+        }
+
+        .layer-class .layui-layer-ico {
+            background: url(../../images/icon.png) no-repeat !important;
+            background-size: 100% 100% !important;
+        }
+
+        .layer-class .layui-layer-title {
+            padding: 0px 50px !important;
+            font-size: 14px;
+            text-align: left;
+            color: #fff;
+            background: #0c4152
+        }
+
+        .layer-class .layui-layer-btn {
+            text-align: center
+        }
+
+        .layui-row .layui-col-xs2 .title {
+            padding: 20px auto;
+        }
+
+        .seace .seacrt {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            width: 10%;
+        }
+
+        .seace .layui-btn {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .seace {
+            display: flex;
+        }
+
+        .archives {
+            width: 100%;
+            height: 100%;
+        }
+
+        .layui-table-view {
+            border-color: #0764646b;
+        }
+
+        .layui-table-header {
+            border-color: #0764646b;
+        }
+
+        th {
+            border-color: #0764646b;
+        }
+
+        .layui-table {
+            background: linear-gradient(to right, #104953, #2bafc2, #025c6848);
+        }
+
+        .layui-table tbody tr {
+            color: #87b4c7;
+            border-color: none;
+        }
+
+        .layui-table th,
+        .layui-table td {
+            border-color: #0764643f;
+            color: rgb(211, 212, 212);
+        }
+
+        .layui-table tbody tr:hover {
+            background-color: #0095c0;
+            color: #fff;
+        }
+
+        .layui-table thead tr {
+            background: linear-gradient(to right, #04404b, #007585fa);
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-row">
+        <div class="layui-col-xs2">
+            <div class="num">
+                177
+            </div>
+            <div class="titlename">
+                总数
+            </div>
+        </div>
+        <div class="layui-col-xs2">
+            <div class="num">
+                0
+            </div>
+            <div class="titlename">
+                <span class="layui-badge-dot"></span>
+                通讯中断
+            </div>
+        </div>
+        <div class="layui-col-xs2">
+            <div class="num">
+                0
+            </div>
+            <div class="titlename">
+                <span class="layui-badge-dot"></span>
+                停运
+            </div>
+        </div>
+        <div class="layui-col-xs2">
+            <div class="num">
+                0
+            </div>
+            <div class="titlename">
+                <span class="layui-badge-dot layui-bg-orange"></span>
+                性能偏低
+            </div>
+        </div>
+        <div class="layui-col-xs2">
+            <div class="num">
+                177
+            </div>
+            <div class="titlename">
+                <span class="layui-badge-dot layui-bg-cyan"></span>
+                运行
+            </div>
+        </div>
+        <div class="layui-col-xs2">
+            <div class="num">
+                0
+            </div>
+            <div class="titlename">
+                <span class="layui-badge-dot layui-bg-blue"></span>
+                夜间状态
+            </div>
+        </div>
+    </div>
+    <div class="seace">
+        <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
+            class="layui-input seacrt">
+        <button type="button" class="layui-btn"> <i class="layui-icon layui-icon-search"></i> 搜索</button>
+    </div>
+    <div class="archives">
+        <table class="layui-hide" lay-skin="line" id="tableList" lay-filter="demo"></table>
+    </div>
+</body>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script type="text/html" id="barDemo">
+	<a class="layui-btn layui-btn-xs edit" lay-event="check">查看</a>
+	<a class="layui-btn layui-btn-xs edit" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-xs del" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="skuDemo">
+	<a class="layui-btn layui-btn-xs edit" lay-event="skuEdit">编辑</a>
+</script>
+
+<script>
+    layui.use(['tree', 'table', 'form', 'laydate'], function ()
+    {
+        var table = layui.table;
+        var $ = layui.jquery;
+        var form = layui.form;
+        var laydate = layui.laydate;
+        //加载表格
+        table.render({
+            elem: '#tableList'
+            , url: 'json/goods.json'
+            //,toolbar:true
+            , defaultToolbar: ['filter']
+            , cols: [[
+                { field: 'id', title: '逆变器名称', align: 'center', style: "    background:transparent;" },
+                { field: 'pic', title: '状态', align: 'center', style: "    background:transparent;", templet: '<div> <span class="layui-badge-dot layui-bg-cyan" style="margin-right:10px;"></span>{{ d.pic}}</div>' },
+                { field: 'name', title: '系统争端', align: 'center', style: "    background: transparent;" },
+                { field: 'price', title: '表读数', align: 'center', style: "    background: transparent;" },
+                { field: 'productSn', title: '当月发电量', align: 'center', style: "    background: transparent;" },
+                {
+                    field: 'status', title: '转换效率', align: 'center', style: "    background: transparent;"
+                },
+                { field: 'sort', title: '当日满发小时(h)', align: 'center', style: "    background: transparent;" },
+                { field: 'price', title: '输出功率(kw)', align: 'center', style: "    background: transparent;" },
+                { field: 'lowStock', title: '输入功率(kw)', align: 'center', style: "    background: transparent;" },
+
+            ]],
+            page: true
+        });
+        //重载表格
+        $('.btnSearch').on('click', function ()
+        {
+            table.reload('tableList', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                },
+                where: {
+                    key: {
+                        className: $('#className').val()
+                    }
+                }
+            });
+        });
+        //监听工具条
+        table.on('tool(demo)', function (obj)
+        {
+            var data = obj.data;
+            // console.log(data);
+            if (obj.event === 'del') {
+                layer.confirm('是否删除：' + data.className + '?',
+                    {
+                        icon: 3,
+                        title: "提示",
+                        skin: "layer-class"
+                    },
+                    function (index)
+                    {
+                        $.ajax({
+                            url: 'json/course.json',
+                            type: 'get',
+                            data: '',
+                            dataType: "json",
+                            beforeSend: function ()
+                            {//console.log(JSON.stringify(data.field));
+                            },
+                            success: function (data)
+                            {//do something
+                                if (data.code == 0) {
+                                    layer.msg('成功', { icon: 1 });
+                                } else {
+                                    layer.alert('抱歉，系统繁忙，请稍后再试！', { icon: 2 });
+                                }
+                            },
+                            error: function (data)
+                            {//do something
+                                layer.msg('与服务器连接失败', { icon: 2 });
+                            }
+                        });
+                        layer.close(index);
+                        layui.table.reload('tableList');//重载表格
+                    });
+            } else if (obj.event === 'check') {
+                layer.open({
+                    title: "查看",
+                    type: 2,
+                    area: ['100%', '100%'],
+                    btnAlign: 'c',
+                    anim: 0,
+                    skin: "layer-class",
+                    shade: [0.5, 'rgb(0,0,0)'],
+                    content: '',
+                    zIndex: layer.zIndex, //重点1
+                    success: function (layero)
+                    {
+                        //layer.setTop(layero); //顶置窗口
+                    },
+                    yes: function (index, layero)
+                    {
+                        //确认按钮
+                    }
+                });
+            } else if (obj.event === 'edit') {
+                layer.open({
+                    title: "编辑",
+                    type: 2,
+                    area: ['100%', '100%'],
+                    btnAlign: 'c',
+                    anim: 0,
+                    skin: "layer-class",
+                    shade: [0.5, 'rgb(0,0,0)'],
+                    content: 'showInfoEdit.html',
+                    zIndex: layer.zIndex, //重点1
+                    success: function (layero)
+                    {
+                        //layer.setTop(layero); //顶置窗口
+                    },
+                    yes: function (index, layero)
+                    {
+                        //确认按钮
+                    }
+                });
+            }
+        });
+        $('.btnAdd').on('click', function ()
+        {
+            layer.open({
+                title: "添加商品",
+                type: 2,
+                area: ['100%', '100%'],
+                btnAlign: 'c',
+                anim: 0,
+                skin: "layer-class",
+                shade: [0.5, 'rgb(0,0,0)'],
+                content: 'showInfoAdd.html',
+                zIndex: layer.zIndex, //重点1
+                success: function (layero)
+                {
+                    //layer.setTop(layero); //顶置窗口
+                },
+                yes: function (index, layero)
+                {
+                    //确认按钮
+                }
+            });
+        });
+        //监听开关事件
+        form.on('switch(stat)', function (data)
+        {
+            var contexts;
+            var sta;
+            var x = data.elem.checked;//判断开关状态
+            if (x == true) {
+                contexts = "打开";
+                sta = 1;
+            } else {
+                contexts = "关闭";
+                sta = 0;
+            }
+            //自定义弹窗
+            layer.open({
+                content: "你确定要" + contexts + "?"
+                , btn: ['确定', '取消']
+                , yes: function (index, layero)
+                {
+                    //按钮确定【按钮一】的回调
+                    data.elem.checked = x;
+                    //对商品进行上架或下架处理
+                    $.ajax({
+                        type: "post",
+                        url: contextPath + '/button',
+                        data: {
+                            //上下架的参数
+                            "id": data.value,
+                            "status": sta
+                        },
+                        success: function (data)
+                        {
+                            if (data == 1) {
+                                layer.msg(contexts + '成功',
+                                    // 提示的样式
+                                    { icon: 1, time: 2000, });
+
+                                // 数据重载
+                                active.reload();
+                            }
+                        }
+                    });
+
+                    form.render();
+                    layer.close(index);
+
+                }
+                , btn2: function (index, layero)
+                {
+                    //按钮【按钮二】的回调
+                    data.elem.checked = !x;
+                    form.render();
+                    layer.close(index);
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                , cancel: function ()
+                {
+                    //右上角关闭回调
+                    data.elem.checked = !x;
+                    form.render();
+                    // return false; //开启该代码可禁止点击该按钮关闭
+                }
+            });
+
+            return false;
+
+        });
+    });
+</script>
+
+</html>

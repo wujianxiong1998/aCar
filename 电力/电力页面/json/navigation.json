@@ -1,0 +1,23 @@
+{
+	"code":0,
+	"msg":"",
+	"count":5,
+	"data":[
+		{"navigationId":"001","navigationOrder":"1","navigationName":"首页","navigationUrl":"index.html","navigationItem":[]},
+		{"navigationId":"002","navigationOrder":"2","navigationName":"关于我们","navigationUrl":"about.html","navigationItem":[
+			{"navigationId":"011","navigationOrder":"1","navigationName":"公司团队","navigationUrl":"about1.html"},
+			{"navigationId":"012","navigationOrder":"2","navigationName":"公司荣誉","navigationUrl":"about2.html"},
+			{"navigationId":"013","navigationOrder":"3","navigationName":"公司历史","navigationUrl":"about3.html"}
+		]},
+		{"navigationId":"003","navigationOrder":"3","navigationName":"新闻动态","navigationUrl":"news.html","navigationItem":[
+			{"navigationId":"014","navigationOrder":"1","navigationName":"行业新闻","navigationUrl":"news1.html"},
+			{"navigationId":"015","navigationOrder":"2","navigationName":"公司新闻","navigationUrl":"news2.html"}
+		]},
+		{"navigationId":"004","navigationOrder":"4","navigationName":"产品服务","navigationUrl":"product.html","navigationItem":[
+			{"navigationId":"016","navigationOrder":"1","navigationName":"高端系列","navigationUrl":"product1.html"},
+			{"navigationId":"017","navigationOrder":"2","navigationName":"中端系列","navigationUrl":"product2.html"},
+			{"navigationId":"018","navigationOrder":"3","navigationName":"低端系列","navigationUrl":"product3.html"}
+		]},
+		{"navigationId":"005","navigationOrder":"5","navigationName":"联系我们","navigationUrl":"contact.html","navigationItem":[]}
+	]
+}

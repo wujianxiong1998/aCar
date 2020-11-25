@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>登录页-后台管理系统</title>
+    <meta name="keywords" content="后台管理系统">
+    <meta name="description" content="后台管理系统">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/login.css" media="all">
+</head>
+<body>
+<div class="login">
+    <div class="layui-container">
+        <div class="login-title">
+            <div class="login-title-text">
+                <img src="images/header.png">
+                <h2>后台管理系统</h2>
+                <p>Backstage Management System</p>
+            </div>
+        </div>
+        <div class="login-content">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" required lay-verify="required" placeholder="请输入账号"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" required lay-verify="required" placeholder="请输入密码"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!-- <div class="layui-form-item code">
+                    <label class="layui-form-label">验证码</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="code" required lay-verify="required" placeholder="请输入验证码"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux"><img src="images/login/code.png" id="iCodeImage"
+                                                                    alt="验证码" title="点击更换"/></div>
+                </div> -->
+                <div class="tips"></div>
+                <div class="layui-form-item login-btn">
+                    <button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary btn-reset">重置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script src="js/aes.js"></script>
+<script src="js/mode-ecb.js"></script>
+<script src="js/common.js"></script>
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            //前端用户名密码 密文传输
+            //获取用户名
+            var username = data.field.userName;
+            //获取密码
+            var password = data.field.pwd;
+            //用户名加密处理
+            //var usernamemd5 = encrypt(username);
+            //密码加密处理
+            //var passwordmd5 = encrypt(password);
+            //data.field.userName = usernamemd5;
+            //data.field.pwd = passwordmd5;
+            $.ajax({
+                url: 'json/login.json',
+                //type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(data.field),
+                dataType: "json",
+                beforeSend: function () {
+                    //do something
+                },
+                success: function (data) {
+                    //do something
+                    if (data.code == 0) {
+                        //把数据放入sessionStorage中
+                        //sessionStorage.setItem("token",data.data.token);
+                        /*if(tokenmap.funlist != null && tokenmap.funlist.length > 0){
+                            sessionStorage.setItem("funlist",JSON.stringify(tokenmap.funlist));
+                        }else{
+                            sessionStorage.setItem("funlist",null);
+                        }*/
+                        location.href = "main.html";
+                    } else {
+                        $('.tips').text(data.data);
+                    }
+                },
+                error: function (data) {
+                    //do something
+                    layer.msg('与服务器连接失败', {icon: 2});
+                }
+            });
+            return false;
+        });
+        $('#iCodeImage').attr('src','/yyjApi/user/admin/check');
+        $('#iCodeImage').on('click', function () {
+            $(this).attr('src', '/yyjApi/user/admin/check?' + Math.random());
+        });
+        $(function () {
+            //改变div的高度
+            $(".login").height($(window).height());
+
+        });
+    });
+</script>
+</html>

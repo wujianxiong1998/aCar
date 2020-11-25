@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta name="keywords" content="后台管理系统">
+    <meta name="description" content="后台管理系统   ">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+    <!-- <link rel="stylesheet" href="../../layui/step-lay/step.css" media="all"> -->
+    <style>
+        .layui-form {
+            display: flex;
+        }
+
+        .layui-input,
+        .layui-select,
+        .layui-textarea {
+            background-color: #032d30;
+            color: white;
+            border: 1px solid #28c6df;
+        }
+
+        .layui-form-select dl {
+            background-color: #032d30;
+            color: white;
+        }
+
+        .layui-btn {
+            background: #054850;
+            margin-left: 20px;
+            color: white;
+            border: 1px solid #28c6df;
+        }
+
+        .btns {
+            padding: 20px 100px;
+        }
+
+        .btns .layui-btn {
+            background: #044c60;
+            font-size: 18px;
+            border-radius: 4px;
+            color: #28c6de;
+        }
+
+        .title {
+            padding: 10px;
+            background: #033239;
+            font-size: 18px;
+            color: white;
+            text-align: center;
+            font-weight: 800;
+        }
+    </style>
+</head>
+
+<body>
+    <form class="layui-form" style="border-bottom: 3px dotted #28c6df;" action="">
+        <div class="layui-input-block">
+            <select name="city" lay-verify="required">
+                <option value="0">场站</option>
+                <option value="1">场站发电量</option>
+                <option value="2">计划电量报表</option>
+            </select>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <select name="city" lay-verify="required">
+                    <option value="">日</option>
+                    <option value="1">周</option>
+                    <option value="2">月</option>
+                    <option value="2">年</option>
+                    <option value="2">总</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="padding-left:20px">
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 160px;">
+                    <input type="date" class="layui-input" id="start_time" name="start_time" placeholder="开始时间">
+                </div>
+                <div class="layui-form-mid">至</div>
+                <div class="layui-input-inline" style="width: 160px;">
+                    <input type="date" class="layui-input" id="end_time" name="end_time" placeholder="结束时间">
+                </div>
+            </div>
+        </div>
+        <div class="layui-input-block">
+            <select name="city" lay-verify="required">
+                <option value="">设备范围</option>
+                <option value="0">场站</option>
+                <option value="1">场站发电量</option>
+                <option value="2">计划电量报表</option>
+            </select>
+        </div>
+    </form>
+    <div style="padding-top: 20px;border-bottom: 3px dotted #28c6df;">
+        <form class="layui-form" action="">
+            <div class="layui-input-block">
+                <select name="city" lay-verify="">
+                    <option value="">添加查询项目</option>
+                    <option value="0">场站</option>
+                    <option value="1">场站发电量</option>
+                    <option value="2">计划电量报表</option>
+                </select>
+            </div>
+            <button class="layui-btn layui-btn-primary">时间</button>
+        </form>
+        <form class="layui-form" style="padding: 20px 0; " action="">
+            <div class="layui-input-block">
+                <select name="city" lay-verify="">
+                    <option value="">添加查询条件</option>
+                    <option value="0">场站</option>
+                    <option value="1">场站发电量</option>
+                    <option value="2">计划电量报表</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="btns">
+        <button class="layui-btn layui-btn-primary">查询</button>
+        <button class="layui-btn layui-btn-primary">导出</button>
+    </div>
+    <div class="title">
+        <span>时间</span>
+    </div>
+</body>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../../layui/step-lay/step.js" charset="utf-8"></script>
+<script>
+    function dele(s)
+    {
+        var par = s.parentNode;
+        par.remove();
+    }
+    layui.config({
+        base: '../../layui/'
+    }).extend({
+        step: 'step-lay/step',
+        selectN: 'layui_extends/selectN',
+        selectM: 'layui_extends/selectM',
+        treeTable: 'layui_extends/treeTable'
+    }).use(['laydate', 'table', 'form', 'layedit', 'upload', 'treeTable', 'selectM', 'selectN', 'step', 'element'], function ()
+    {
+        var table = layui.table;
+        var $ = layui.jquery;
+        var form = layui.form;
+        var layedit = layui.layedit;
+        var upload = layui.upload;
+        var treeTable = layui.treeTable;
+        var selectN = layui.selectN;
+        var selectM = layui.selectM;
+        var step = layui.step;
+        var element = layui.element;
+        var laydate = layui.laydate;
+        var values = 1;
+
+
+        layedit.build('demoedit1'); //建立编辑器
+        layedit.build('demoedit2'); //建立编辑器
+
+        var start = {
+            istime: true,
+            format: 'YYYY-MM-DD hh:mm:ss',
+            max: '2099-06-16 23:59:59',
+            istoday: true,
+            choose: function (datas)
+            {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+            }
+        };
+
+        var end = {
+            istime: true,
+            format: 'YYYY-MM-DD hh:mm:ss',
+            max: '2099-06-16 23:59:59',
+            istoday: true,
+            choose: function (datas)
+            {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+
+        document.getElementById('start_time').onclick = function ()
+        {
+            start.elem = this;
+            laydate(start);
+        };
+        document.getElementById('end_time').onclick = function ()
+        {
+            end.elem = this;
+            laydate(end);
+        };
+        layui.use('form', function ()
+        {
+            var form = layui.form;
+        })
+
+        laydate.render({
+            elem: '#stepForm',
+            filter: 'stepForm',
+            width: '100%', //设置容器宽度
+            stepWidth: '750px',
+            height: '1600px',
+            // stepItems: [{
+            //     title: '填写商品信息'
+            // }, {
+            //     title: '填写商品促销'
+            // }, {
+            //     title: '填写商品属性'
+            // }]
+        });
+    });
+</script>
+
+</html>

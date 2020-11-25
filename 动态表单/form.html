@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+    .maxExpand {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .myPagination {
+      margin: 10px;
+      display: flex;
+      justify-content: center;
+    }
+    .myPagination .el-pagination{
+      width: 50%;
+    }
+    .btns {
+      margin: 10px 0;
+    }
+    .inp .el-tag {
+      position: absolute;
+      top: 50px;
+      left: 10px;
+    }
+    .container .el-table .cell i {
+      color: #f00;
+    }
+    .inpBoxs {
+      display: flex;
+    }
+    .inpBoxs .el-input{
+      margin: 0 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="container">
+      <div>
+        <div class="btns">
+          <el-button type="primary" @click="onAdd">新增</el-button>
+          <el-button type="success" @click="onSubmit">保存</el-button>
+          <el-button type="danger" @click="onDel">删除</el-button>
+        </div>
+        <el-table
+          :data="tabledatas"
+          :border=true
+          @selection-change="handleSelectionChange"
+          @row-click="onRowClick">
+          <el-table-column
+            type="selection"
+            width="55">
+          </el-table-column>
+          <el-table-column
+          type="index"
+          :index="currentPage"
+          label="序号"
+          width="50"></el-table-column>
+          <el-table-column type="expand">
+            <template slot-scope="props">
+              <el-form label-position="left" inline class="demo-table-expand">
+                <div class="inpBoxs">
+                  <el-input>
+                  </el-input>
+                  <el-input>
+                  </el-input>
+                  <el-input>
+                  </el-input>
+                </div>
+              </el-form>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-for="(item,i) of colDatas"
+            :key="item.id"
+            :label="item.title"
+            :render-header="renderHeader"
+            >
+              <template slot-scope="scope">
+                  <div class="inp">
+                    <el-input
+                      placeholder="请输入内容"
+                      v-show="scope.row.show"
+                      v-model="scope.row[item.key]">{{scope.row[item.key]}}</el-input>
+                    <el-tag size="small" ref="required" type="danger" v-if="item.isRequired && scope.row[item.key].length===0">{{item.reg.msg}}</el-tag>
+                  </div>
+                  <span
+                    class="maxExpand"
+                    v-show="!scope.row.show">{{scope.row[item.key]}}</span>
+              </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div class="myPagination">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentIndex"
+          :page-sizes="[5, 10, 20, 50]"
+          :page-size="10"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+      </div>
+    </div>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          colDatas: [],
+          tabledatas: [],
+          dataSource: [],
+          total: 0,
+          currentPage: 1,
+          pageSize: 10,
+          currentIndex: 1,
+          selectArr: [],
+          delData: [],
+          isRequiredArr: []
+        }
+      },
+      methods: {
+        // 表头必填icon
+        renderHeader (h,{column, $index}) {
+          if(this.$data.isRequiredArr.some(item=>item===$index-2)){
+            return h(
+            'div',
+              [ 
+              h("i", '* ', {                            // 生成 i 标签 ，添加icon 设置 样式，slot 必填
+              }),
+              h('span', column.label)
+            ],
+            );
+          }
+          return h(
+            'div',
+              [ 
+              h('span', column.label)
+            ],
+            );
+        },
+        // 新增
+        onAdd() {
+          let {dataSource} = this.$data
+          let id = Number(dataSource.length + 1)
+          dataSource.unshift({id, tab1: '',tab2: '',tab3: '',tab4: '', show:true })
+          this.$data.dataSource = dataSource
+          this.onPagination()
+        },
+
+        // 提交
+        onSubmit() {
+          if(this.$refs.required.length!==0) {
+            return
+          }
+          let {tabledatas} = this.$data
+          tabledatas.forEach(item=>{
+            item.show = false
+          })
+          this.$data.tabledatas = tabledatas
+          this.onPagination()
+        },
+
+        // 行选择编辑
+        onRowClick(row) {
+          row.show = true
+        },
+        // 表格checkbox选择
+        handleSelectionChange(val) {
+          this.$data.selectArr = val.map(item=>item.id)
+        },
+        // 删除(删除的数据保存在delData中，接接口把下面的前端删除注释掉)
+        onDel() {
+          let {selectArr, dataSource} = this.$data
+          if(selectArr.length===0) {
+            this.$message.error('未选择任何数据！')
+            return
+          }
+          let newArr = []
+          selectArr.forEach(list=>{
+            let tempArr = dataSource.filter(item=>{
+              return item.id===list
+            })
+            newArr.push(...tempArr)
+          })
+          this.$data.delData = newArr
+
+          // --前端删除--
+          let a = dataSource
+          let b = newArr
+          let result = a.filter(v=>{ 
+            return !(b.indexOf(v) > -1) 
+          }).concat(b.filter(v=>{
+            return !(a.indexOf(v) > -1)
+          }))
+          this.$data.dataSource = result
+          this.onPagination()
+        },
+
+        // 分页器与表格实现联动
+        onPagination(page=0, rows=10) {
+          this.$data.tabledatas = this.$data.dataSource.slice(page,rows)
+          this.$data.total = this.$data.dataSource.length
+        },
+        // 分页器-rows
+        handleSizeChange(val) {
+          let {currentIndex} = this.$data
+          this.$data.pageSize = val
+          this.$data.currentPage = val * (currentIndex - 1)+1
+          this.onPagination(val*(currentIndex-1),currentIndex*val)
+        },
+        handleCurrentChange(val) {
+          let {pageSize, currentPage, currentIndex} = this.$data
+          this.$data.currentPage = pageSize*(val-1)+1
+          this.$data.currentIndex = val
+          this.onPagination(pageSize*(val-1), pageSize*val)
+        }
+      },
+      created() {
+        // 模拟从接口获得数据
+        this.$data.colDatas = [
+          { title: 'tab1', key: 'tab1', id: 1, isRequired: true, reg: {
+            max: 10,
+            msg: '仅限十个字符'
+          }},
+          { title: 'tab2', key: 'tab2', id: 2, isRequired: true, reg: {
+            max: 10,
+            msg: '仅限十个字符'
+          }},
+          { title: 'tab3', key: 'tab3', id: 3, isRequired: false, reg: {
+            max: 10,
+            msg: '仅限十个字符'
+          }},
+          { title: 'tab4', key: 'tab4', id: 4, isRequired: false, reg: {
+            max: 10,
+            msg: '仅限十个字符'
+          }},
+        ]
+        this.$data.isRequiredArr = this.$data.colDatas.map((item,index)=>{
+          if(item.isRequired) {
+            return index
+          }
+        })
+        console.log(this.$data.isRequiredArr)
+        this.$data.dataSource = [
+          { id: 1, tab1: 'a1',tab2: 'b1',tab3: 'c1',tab4: 'd1', show:false },
+          { id: 2, tab1: 'a2',tab2: 'b2',tab3: 'c2',tab4: 'd2', show:false },
+          { id: 3, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
+          { id: 4, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
+          { id: 5, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
+          { id: 6, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
+          { id: 7, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
+          { id: 8, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
+          { id: 9, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
+          { id: 10, tab1: 'a10',tab2: 'b10',tab3: 'c3',tab4: 'd3', show:false },
+          { id: 11, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
+          { id: 12, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
+          { id: 13, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
+        ]
+        this.$data.total = this.$data.dataSource.length
+        this.onPagination()
+      },
+      mounted() {
+      },
+      destroyed() {
+      },
+    })
+  </script>
+</body>
+
+</html>

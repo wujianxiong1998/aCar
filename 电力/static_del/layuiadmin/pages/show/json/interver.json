@@ -1,0 +1,55 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 10,
+  "data": [
+    {
+      "interver": "测试",
+      "hours": "测试",
+      "electricity": "测试",
+      "PR": "测试"
+    },
+    {
+      "interver": "测试",
+      "hours": "测试",
+      "electricity": "测试",
+      "PR": "测试"
+    },
+    {
+      "interver": "测试",
+      "hours": "测试",
+      "electricity": "测试",
+      "PR": "测试"
+    },
+    {
+      "interver": "测试",
+      "hours": "测试",
+      "electricity": "测试",
+      "PR": "测试"
+    },
+    {
+      "interver": "测试",
+      "hours": "测试",
+      "electricity": "测试",
+      "PR": "测试"
+    },
+    {
+      "interver": "测试",
+      "hours": "测试",
+      "electricity": "测试",
+      "PR": "测试"
+    },
+    {
+      "interver": "测试",
+      "hours": "测试",
+      "electricity": "测试",
+      "PR": "测试"
+    },
+    {
+      "interver": "测试",
+      "hours": "测试",
+      "electricity": "测试",
+      "PR": "测试"
+    }
+  ]
+}

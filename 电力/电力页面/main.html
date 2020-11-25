@@ -1,0 +1,86 @@
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>订单管理系统</title>
+	<link rel="stylesheet" href="layui/css/layui.css">
+	<link rel="stylesheet" href="css/main.css" media="all">
+  </head>
+  <body class="layui-layout-body">
+  <div class="layui-layout layui-layout-admin" style="background: #314552;">
+	<div class="layui-header">
+	  <div class="layui-logo" style="width: 110px;">
+		<ul class="layui-nav layui-layout-right">
+			<li class="layui-nav-item">
+			  <a href="javascript:;">
+				 Env
+			  </a>
+			  <dl class="layui-nav-child" style="width: 250px;height: 200px;">
+				<dd><a href="">基本资料</a></dd>
+			  </dl>
+			</li>
+		  </ul>
+	  </div>
+	  <!-- 头部区域（可配合layui已有的水平导航） -->
+	  <!-- <ul class="layui-nav layui-layout-left">
+		<li data-name="get" class="layui-nav-item"><a
+			href="javascript:;" lay-href="html/Billing/index.html"
+			class="nav-tab" lay-id="user" data-type="tabAdd"
+			lay-tips="会员管理"><label>订货开单</label>
+		</a></li>
+		<li data-name="get" class="layui-nav-item"><a
+			href="javascript:;" lay-href="html/order/index.html"
+			class="nav-tab" lay-id="staff" data-type="tabAdd"
+			lay-tips="员工管理"><label>订单列表</label>
+		</a></li>
+	  </ul> -->
+	  <ul class="layui-nav layui-layout-right">
+		<li class="layui-nav-item">
+		  <a href="javascript:;">
+			<img src="images/logo.png" class="layui-nav-img">
+			智能监控
+		  </a>
+		  <dl class="layui-nav-child" style="height: 200px;width: 400px;right: 0;left: auto;">
+			<ul class="layui-nav layui-layout-left" style="left: 0;">
+				<li data-name="get" class="layui-nav-item"><a
+					href="javascript:;" lay-href="html/Billing/index.html"
+					class="nav-tab" lay-id="user" data-type="tabAdd"
+					lay-tips="会员管理"><label>订货开单</label>
+				</a></li>
+				<li data-name="get" class="layui-nav-item"><a
+					href="javascript:;" lay-href="html/order/index.html"
+					class="nav-tab" lay-id="staff" data-type="tabAdd"
+					lay-tips="员工管理"><label>订单列表</label>
+				</a></li>
+			  </ul>
+		  </dl>
+		</li>
+		<li class="layui-nav-item"><a href="login.html">退出</a></li>
+	  </ul>
+	</div>
+	<div class="layui-bodier">
+		<div class="layui-tab" lay-filter="tab" lay-allowClose="true">
+			<ul class="layui-tab-title" style="display: none;">
+				<li class="firstTab" lay-id="home1"></li>
+			</ul>
+			<div class="layui-tab-content">
+				<div class="layui-tab-item ">
+					<iframe src="" frameborder="0" name="tabFrame"
+						class="tabFrame"></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	 
+  </div>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script src="js/main.js" charset="utf-8"></script>
+<script src="js/public.js" charset="utf-8"></script>
+<script>
+	layui.use('form', function() {
+		var form = layui.form;
+		var $ = layui.jquery;
+	});
+</script>
+</body>
+</html>

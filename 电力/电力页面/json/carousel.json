@@ -1,0 +1,26 @@
+{
+	"code":0,
+	"msg":"",
+	"count":10,
+	"data":[{
+		"carouselId":"009",
+		"carouselType":"1",
+		"carouselShow":"1",
+		"carouselOrder":"9",
+		"carouselTitle":"海报9",
+		"carouselSubTitle":"这是什么什么海报9",
+		"carouselContent":"内容9",
+		"carouselPicture":"../../../upload/logo.png",
+		"carouselUrl":"index.html"
+	},{
+		"carouselId":"010",
+		"carouselType":"1",
+		"carouselShow":"1",
+		"carouselOrder":"10",
+		"carouselTitle":"海报10",
+		"carouselSubTitle":"这是什么什么海报10",
+		"carouselContent":"内容10",
+		"carouselPicture":"../../../upload/logo.png",
+		"carouselUrl":"index.html"
+	}]
+}

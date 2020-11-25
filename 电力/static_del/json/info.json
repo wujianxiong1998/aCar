@@ -1,0 +1,15 @@
+{
+	"code":0,
+	"msg":"",
+	"count":1,
+	"data":[{
+		"companyName":"芸享实业有限公司",
+		"companyPhone":"023-12345678",
+		"companyTel":"4005006000",
+		"companyDomain":"yunxiang.com",
+		"companyEmail":"yunxiang@yunxiang.com",
+		"companyAddress":"重庆市南岸区",
+		"companyICP":"666666666",
+		"companyLogo":"../../images/logo.png"
+	}]
+}

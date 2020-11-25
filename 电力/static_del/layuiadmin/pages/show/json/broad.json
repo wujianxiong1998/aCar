@@ -1,0 +1,31 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 10,
+  "data": [{
+    "id": 1,
+    "name": "服装-T恤",
+    "attributeCount": 2,
+    "paramCount": 5
+  }, {
+    "id": 2,
+    "name": "服装-裤装",
+    "attributeCount": 2,
+    "paramCount": 4
+  }, {
+    "id": 3,
+    "name": "手机数码-手机通讯",
+    "attributeCount": 2,
+    "paramCount": 4
+  }, {
+    "id": 4,
+    "name": "配件",
+    "attributeCount": 0,
+    "paramCount": 0
+  }, {
+    "id": 5,
+    "name": "居家",
+    "attributeCount": 0,
+    "paramCount": 0
+  }]
+}
