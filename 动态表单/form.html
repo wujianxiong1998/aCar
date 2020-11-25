@@ -33,12 +33,6 @@
     .container .el-table .cell i {
       color: #f00;
     }
-    .inpBoxs {
-      display: flex;
-    }
-    .inpBoxs .el-input{
-      margin: 0 10px;
-    }
   </style>
 </head>
 
@@ -65,20 +59,6 @@
           :index="currentPage"
           label="序号"
           width="50"></el-table-column>
-          <el-table-column type="expand">
-            <template slot-scope="props">
-              <el-form label-position="left" inline class="demo-table-expand">
-                <div class="inpBoxs">
-                  <el-input>
-                  </el-input>
-                  <el-input>
-                  </el-input>
-                  <el-input>
-                  </el-input>
-                </div>
-              </el-form>
-            </template>
-          </el-table-column>
           <el-table-column
             v-for="(item,i) of colDatas"
             :key="item.id"
@@ -89,9 +69,10 @@
                   <div class="inp">
                     <el-input
                       placeholder="请输入内容"
+                      :disabled="item.reg.disabled && scope.row.isAdd===undefined"
                       v-show="scope.row.show"
                       v-model="scope.row[item.key]">{{scope.row[item.key]}}</el-input>
-                    <el-tag size="small" ref="required" type="danger" v-if="item.isRequired && scope.row[item.key].length===0">{{item.reg.msg}}</el-tag>
+                    <el-tag size="small" ref="required" type="danger" v-if="item.isRequired &&( scope.row[item.key].length>item.reg.max || scope.row[item.key].length===0)">{{item.reg.msg}}</el-tag>
                   </div>
                   <span
                     class="maxExpand"
@@ -154,7 +135,7 @@
         onAdd() {
           let {dataSource} = this.$data
           let id = Number(dataSource.length + 1)
-          dataSource.unshift({id, tab1: '',tab2: '',tab3: '',tab4: '', show:true })
+          dataSource.unshift({id, tab1: '',tab2: '',tab3: '',tab4: '', show:true, isAdd: true })
           this.$data.dataSource = dataSource
           this.onPagination()
         },
@@ -164,6 +145,11 @@
           if(this.$refs.required.length!==0) {
             return
           }
+          this.$data.dataSource.forEach(item=>{
+            if(item.isAdd) {
+               item.isAdd = undefined 
+            }
+          })
           let {tabledatas} = this.$data
           tabledatas.forEach(item=>{
             item.show = false
@@ -232,18 +218,22 @@
         this.$data.colDatas = [
           { title: 'tab1', key: 'tab1', id: 1, isRequired: true, reg: {
             max: 10,
+            disabled: false,
             msg: '仅限十个字符'
           }},
           { title: 'tab2', key: 'tab2', id: 2, isRequired: true, reg: {
             max: 10,
+            disabled: true,
             msg: '仅限十个字符'
           }},
           { title: 'tab3', key: 'tab3', id: 3, isRequired: false, reg: {
             max: 10,
+            disabled: false,
             msg: '仅限十个字符'
           }},
           { title: 'tab4', key: 'tab4', id: 4, isRequired: false, reg: {
             max: 10,
+            disabled: false,
             msg: '仅限十个字符'
           }},
         ]

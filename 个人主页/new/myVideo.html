@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link rel="stylesheet" rev="stylesheet" href="css/style.css" type="text/css" />
+<title>我的视频</title>
+</head>
+<body>
+<div class="nb_body">
+  <div class="nb_main">
+    <div class="nb_are nb_nav">
+      <div class="nav2">
+        <ul>
+          <li><a href="index.html">首页</a></li>
+          <li><a href="mylog.html">我的日志</a></li>
+          <li><a href="aboutMe.html">我的简历</a></li>
+          <li><a href="myPhoto.html">我的相册</a></li>
+          <li class="selected"><a href="myVideo.html">我的视频</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div id="modal"></div> -->
+<div class="myVideo">
+  <div>
+    <embed src="images/video.mp4" width="550" height="450"></embed>
+  </div>
+  <div>
+    <div id="light">关灯</div>
+    <div id="light_open">开灯</div>
+  </div>
+</div>
+</div>
+<script>
+  document.querySelector('#light_open').addEventListener('click', function() {
+    document.querySelector('body').style.background = 'rgb(222,206,176)'
+    document.querySelector('.nb_body').style.height = '203px'
+  })
+  document.querySelector('#light').addEventListener('click', function() {
+    document.querySelector('body').style.background = '#777'
+    document.querySelector('.nb_body').style.height = '50px'
+  })
+</script>
+</body>
+</html>
