@@ -40,11 +40,30 @@
   <div id="app">
     <div class="container">
       <div>
+
+        <!-- 按钮组 -->
         <div class="btns">
           <el-button type="primary" @click="onAdd">新增</el-button>
           <el-button type="success" @click="onSubmit">保存</el-button>
           <el-button type="danger" @click="onDel">删除</el-button>
+          <el-select
+            v-model="chooseDatas"
+            multiple
+            collapse-tags
+            @change="onSelect"
+            style="margin-left: 20px;"
+            placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :disabled="item.isAllow"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
         </div>
+
+        <!-- 表格 -->
         <el-table
           :data="tabledatas"
           :border=true
@@ -69,6 +88,7 @@
                   <div class="inp">
                     <el-input
                       placeholder="请输入内容"
+                      @change="onEdit(scope.row.id)"
                       :disabled="item.reg.disabled && scope.row.isAdd===undefined"
                       v-show="scope.row.show"
                       v-model="scope.row[item.key]">{{scope.row[item.key]}}</el-input>
@@ -80,7 +100,10 @@
               </template>
           </el-table-column>
         </el-table>
+
       </div>
+
+      <!-- 分页 -->
       <div class="myPagination">
         <el-pagination
           @size-change="handleSizeChange"
@@ -99,19 +122,189 @@
       el: '#app',
       data() {
         return {
-          colDatas: [],
-          tabledatas: [],
-          dataSource: [],
-          total: 0,
-          currentPage: 1,
-          pageSize: 10,
-          currentIndex: 1,
-          selectArr: [],
-          delData: [],
-          isRequiredArr: []
+          colDatas: [],  //选择的列数据
+          originColDatas: [], //列数据
+          tabledatas: [], //当页的表格数据
+          dataSource: [], //所有的表格数据
+          total: 0, //分页总数
+          currentPage: 1, //第几页
+          pageSize: 10, //每页多少数据
+          currentIndex: 1, //当前序号
+          selectArr: [], //选择行的id
+          delData: [], //删除的数据
+          isRequiredArr: [], //标识是否必填
+          options: [], //下拉可选列
+          chooseDatas: [], //选择的列的key
+          addIds: [],  //记录新增的id
+          newDatas: [],  //记录新增的数据
+          editIds: [],  //记录编辑的id
+          editDatas: []  //记录编辑的数据
         }
       },
       methods: {
+        // 获取表格数据
+        getList() {
+          // 表格数据
+          let getListDatas = [
+            { id: 1, tab1: 'a1',tab2: 'b1',tab3: 'c1',tab4: 'd1' },
+            { id: 2, tab1: 'a2',tab2: 'b2',tab3: 'c2',tab4: 'd2' },
+            { id: 3, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3' },
+            { id: 4, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3' },
+            { id: 5, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3' },
+            { id: 6, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3' },
+            { id: 7, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3' },
+            { id: 8, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3' },
+            { id: 9, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3' },
+            { id: 10, tab1: 'a10',tab2: 'b10',tab3: 'c3',tab4: 'd3' },
+            { id: 11, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3' },
+            { id: 12, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3' },
+            { id: 13, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3' },
+          ]
+          getListDatas.forEach(item=>{
+            item.show = false
+          })
+          this.$data.dataSource = getListDatas
+        },
+        // 获取列
+        getCol() {
+          let originColDatas = [
+            { title: '姓名', key: 'tab1', id: 1, isRequired: true, reg: {
+              max: 10,
+              disabled: false,
+              msg: '仅限十个字符'
+            }},
+            { title: '年龄', key: 'tab2', id: 2, isRequired: true, reg: {
+              max: 10,
+              disabled: true,
+              msg: '仅限十个字符'
+            }},
+            { title: '爱好', key: 'tab3', id: 3, isRequired: false, reg: {
+              max: 10,
+              disabled: false,
+              msg: ''
+            }},
+            { title: '电话', key: 'tab4', id: 4, isRequired: false, reg: {
+              max: 10,
+              disabled: false,
+              msg: ''
+            }},
+            { title: '邮箱', key: 'tab5', id: 5, isRequired: false, reg: {
+              max: 10,
+              disabled: false,
+              msg: ''
+            }},
+            { title: '住址', key: 'tab6', id: 6, isRequired: false, reg: {
+              max: 10,
+              disabled: false,
+              msg: ''
+            }},
+          ]
+          this.$data.originColDatas = originColDatas
+          this.$data.colDatas = originColDatas
+        },
+        // 获取可选择下拉的列
+        getChoose() {
+          // 供选择的列数据
+          this.$data.options = [{
+            value: 'tab1',
+            label: '姓名',
+            isAllow: true
+          }, {
+            value: 'tab2',
+            label: '年龄',
+            isAllow: true
+          }, {
+            value: 'tab3',
+            label: '爱好',
+            isAllow: false
+          }, {
+            value: 'tab4',
+            label: '电话',
+            isAllow: false
+          }, {
+            value: 'tab5',
+            label: '邮箱',
+            isAllow: false
+          }, {
+            value: 'tab6',
+            label: '住址',
+            isAllow: false
+          }]
+        },
+        
+        // =========按钮==========
+        // 新增
+        onAdd() {
+          let {dataSource,addIds} = this.$data
+          let id = new Date().getTime() //获取唯一ID
+          dataSource.unshift({id, tab1: '',tab2: '',tab3: '',tab4: '', show:true, isAdd: true })
+          addIds.push(id)
+          this.$data.addIds = addIds
+          this.$data.dataSource = dataSource
+          this.onPagination()
+        },
+        // 提交
+        onSubmit() {
+          if(this.$refs.required) {
+            if(this.$refs.required.length!==0) {
+              return
+            }
+          }
+          this.$data.dataSource.forEach(item=>{
+            if(item.isAdd) {
+               item.isAdd = undefined 
+            }
+          })
+          let {tabledatas} = this.$data
+          tabledatas.forEach(item=>{
+            item.show = false
+          })
+          this.$data.tabledatas = tabledatas
+          this.getAddDatas()
+          this.getEditDatas()
+          this.onPagination()
+          console.log('新增的数据', this.newDatas)
+          console.log('编辑的数据', this.editDatas)
+        },
+
+        //记录新增的数据
+        getAddDatas() {
+          this.$data.newDatas = []
+          let {dataSource,addIds,newDatas} = this.$data
+          newDatas = dataSource.filter(item=>{
+            if(addIds.indexOf(item.id)!==-1) {
+              return item
+            }
+          })
+          this.$data.newDatas = newDatas
+          // 清空新增的id
+          this.$data.addIds = []
+        },
+        //记录编辑的数据
+        getEditDatas() {
+          this.$data.editDatas = []
+          let {dataSource,editIds,editDatas} = this.$data
+          editDatas = dataSource.filter(item=>{
+            if(editIds.indexOf(item.id)!==-1) {
+              return item
+            }
+          })
+          this.$data.editDatas = editDatas
+          // 清空新增的id
+          this.$data.editIds = []
+        },
+
+        // 选择列
+        onSelect(values) {
+          this.$data.chooseDatas = values
+          this.$data.colDatas = this.$data.originColDatas.filter(item=>{
+            if(values.indexOf(item.key)!==-1) {
+              return item
+            }
+          })
+        },
+
+        // ===========表格==========
         // 表头必填icon
         renderHeader (h,{column, $index}) {
           if(this.$data.isRequiredArr.some(item=>item===$index-2)){
@@ -131,33 +324,6 @@
             ],
             );
         },
-        // 新增
-        onAdd() {
-          let {dataSource} = this.$data
-          let id = Number(dataSource.length + 1)
-          dataSource.unshift({id, tab1: '',tab2: '',tab3: '',tab4: '', show:true, isAdd: true })
-          this.$data.dataSource = dataSource
-          this.onPagination()
-        },
-
-        // 提交
-        onSubmit() {
-          if(this.$refs.required.length!==0) {
-            return
-          }
-          this.$data.dataSource.forEach(item=>{
-            if(item.isAdd) {
-               item.isAdd = undefined 
-            }
-          })
-          let {tabledatas} = this.$data
-          tabledatas.forEach(item=>{
-            item.show = false
-          })
-          this.$data.tabledatas = tabledatas
-          this.onPagination()
-        },
-
         // 行选择编辑
         onRowClick(row) {
           row.show = true
@@ -168,6 +334,7 @@
         },
         // 删除(删除的数据保存在delData中，接接口把下面的前端删除注释掉)
         onDel() {
+          this.$data.delData = []
           let {selectArr, dataSource} = this.$data
           if(selectArr.length===0) {
             this.$message.error('未选择任何数据！')
@@ -191,9 +358,19 @@
             return !(a.indexOf(v) > -1)
           }))
           this.$data.dataSource = result
+
+          // 以下保留
           this.onPagination()
+          console.log('删除的数据', this.delData)
+        },
+        // 编辑
+        onEdit(id) {
+          let {editIds} = this.$data
+          editIds.push(id)
+          this.$data.editIds = editIds
         },
 
+        // ============分页===========
         // 分页器与表格实现联动
         onPagination(page=0, rows=10) {
           this.$data.tabledatas = this.$data.dataSource.slice(page,rows)
@@ -213,54 +390,34 @@
           this.onPagination(pageSize*(val-1), pageSize*val)
         }
       },
+
       created() {
-        // 模拟从接口获得数据
-        this.$data.colDatas = [
-          { title: 'tab1', key: 'tab1', id: 1, isRequired: true, reg: {
-            max: 10,
-            disabled: false,
-            msg: '仅限十个字符'
-          }},
-          { title: 'tab2', key: 'tab2', id: 2, isRequired: true, reg: {
-            max: 10,
-            disabled: true,
-            msg: '仅限十个字符'
-          }},
-          { title: 'tab3', key: 'tab3', id: 3, isRequired: false, reg: {
-            max: 10,
-            disabled: false,
-            msg: '仅限十个字符'
-          }},
-          { title: 'tab4', key: 'tab4', id: 4, isRequired: false, reg: {
-            max: 10,
-            disabled: false,
-            msg: '仅限十个字符'
-          }},
-        ]
+        // =====模拟从接口获得数据=====
+        this.getList()
+        this.getCol()
+
+        // =====列数据========
+        // 哪些列的数据是必填
         this.$data.isRequiredArr = this.$data.colDatas.map((item,index)=>{
           if(item.isRequired) {
             return index
           }
         })
-        console.log(this.$data.isRequiredArr)
-        this.$data.dataSource = [
-          { id: 1, tab1: 'a1',tab2: 'b1',tab3: 'c1',tab4: 'd1', show:false },
-          { id: 2, tab1: 'a2',tab2: 'b2',tab3: 'c2',tab4: 'd2', show:false },
-          { id: 3, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
-          { id: 4, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
-          { id: 5, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
-          { id: 6, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
-          { id: 7, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
-          { id: 8, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
-          { id: 9, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
-          { id: 10, tab1: 'a10',tab2: 'b10',tab3: 'c3',tab4: 'd3', show:false },
-          { id: 11, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
-          { id: 12, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
-          { id: 13, tab1: 'a3',tab2: 'b3',tab3: 'c3',tab4: 'd3', show:false },
-        ]
+        this.getChoose()
+        // 初始化选择的列
+        this.$data.chooseDatas = ['tab1', 'tab2', 'tab3']
+        let {chooseDatas} = this.$data
+        this.$data.colDatas = this.$data.originColDatas.filter(item=>{
+          if(chooseDatas.indexOf(item.key)!==-1) {
+            return item
+          }
+        })
+        
+        // =======分页=======
         this.$data.total = this.$data.dataSource.length
         this.onPagination()
       },
+
       mounted() {
       },
       destroyed() {
